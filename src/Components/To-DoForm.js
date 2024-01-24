@@ -1,5 +1,5 @@
 export const ToDoForm = ({
-  buttonClick,
+  toggleModal,
   formData,
   setFormData,
   handleSubmit,
@@ -75,7 +75,7 @@ export const ToDoForm = ({
           </button>
           <button
             className="m-2 pl-4 pr-4 shadow-md hover:drop-shadow-xl active:bg-blue-700 p-2 rounded-xl bg-blue-500 text-white"
-            onClick={buttonClick}
+            onClick={toggleModal}
           >
             Close
           </button>

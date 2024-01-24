@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { ToDoForm } from "./To-DoForm";
 
-export const Modal = ({ buttonClick, setToDos, setShowModal }) => {
+export const Modal = ({ toggleModal, setToDos, setShowModal }) => {
   const [formData, setFormData] = useState({
     id: "",
     toDoName: "",
@@ -49,14 +49,14 @@ export const Modal = ({ buttonClick, setToDos, setShowModal }) => {
     <div
       id="modal"
       className="fixed inset-0 flex justify-center items-center min-h-screen w-full bg-gray-200 bg-opacity-50"
-      onClick={buttonClick}
+      onClick={toggleModal}
     >
       <div
         onClick={(e) => e.stopPropagation()}
         className=" p-2 bg-white flex flex-col items-center shadow-lg justify-center border border-gray-200 rounded-lg"
       >
         <ToDoForm
-          buttonClick={buttonClick}
+          toggleModal={toggleModal}
           setToDos={setToDos}
           formData={formData}
           setFormData={setFormData}

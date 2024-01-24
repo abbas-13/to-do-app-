@@ -1,10 +1,9 @@
 import { MdDeleteSweep } from "react-icons/md";
 
-export const ToDoItem = ({ data, handleChange, deleteToDo }) => {
+export const ToDoItem = ({ data, checkToDo, deleteToDo }) => {
   const toDoClassName = data.isChecked
     ? "font-semibold text-gray-600 ml-2 line-through"
     : "ml-2 font-semibold";
-  console.log(data);
 
   return (
     <div className="bg-gray-200 rounded-lg w-full m-2 p-2">
@@ -12,7 +11,7 @@ export const ToDoItem = ({ data, handleChange, deleteToDo }) => {
         <input
           type="checkbox"
           checked={data.isChecked}
-          onChange={() => handleChange(data.id)}
+          onChange={() => checkToDo(data.id)}
         />
         <label className={toDoClassName}> {data.toDoName}</label>
         <div className="absolute flex items-center mr-2 inset-y-0 right-0">

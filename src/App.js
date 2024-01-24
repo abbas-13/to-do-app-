@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "react";
 
 import { Appshell } from "./Components/Appshell";
 import { Modal } from "./Components/Modal";
@@ -9,37 +8,30 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [toDos, setToDos] = useState();
 
-  const handleClick = (event) => {
+  const toggleModal = (event) => {
     setShowModal(!showModal);
     event.preventDefault();
   };
 
-  const handleChange = (toDoId) => {
-    setToDos((prevToDos) => {
-      const updatedToDos = prevToDos.map((toDo) =>
-        toDo.id === toDoId ? { ...toDo, isChecked: !toDo.isChecked } : toDo
-      );
+  const checkToDo = (toDoId) => {
+    const updatedToDos = toDos.map((toDo) =>
+      toDo.id === toDoId ? { ...toDo, isChecked: !toDo.isChecked } : toDo
+    );
 
-      localStorage.setItem("toDoData", JSON.stringify(updatedToDos));
+    localStorage.setItem("toDoData", JSON.stringify(updatedToDos));
 
-      return updatedToDos;
-    });
+    setToDos(updatedToDos);
   };
 
   const deleteToDo = (toDoId) => {
-    setToDos((prevToDos) => {
-      const updatedToDos = prevToDos.filter((toDo) => toDo.id !== toDoId);
-      localStorage.setItem("toDoData", JSON.stringify(updatedToDos));
-
-      return updatedToDos;
-    });
+    const updatedToDos = toDos.filter((toDo) => toDo.id !== toDoId);
+    localStorage.setItem("toDoData", JSON.stringify(updatedToDos));
+    setToDos(updatedToDos);
   };
 
   useEffect(() => {
     setToDos(JSON.parse(localStorage.getItem("toDoData")) || []);
   }, []);
-
-  console.log({ toDos });
 
   return (
     <div>
@@ -48,7 +40,7 @@ function App() {
         <div className="border border-gray-200 m-2"></div>
         <div className="grid grid-cols-8">
           <button
-            onClick={handleClick}
+            onClick={toggleModal}
             className="m-2 shadow-md hover:drop-shadow-xl active:bg-blue-700 p-2 rounded-xl bg-blue-500 text-white"
           >
             Add +
@@ -60,7 +52,7 @@ function App() {
               <ToDoItem
                 key={index}
                 data={toDo}
-                handleChange={handleChange}
+                checkToDo={checkToDo}
                 deleteToDo={deleteToDo}
               />
             ))}
@@ -68,7 +60,7 @@ function App() {
             <Modal
               setShowModal={setShowModal}
               setToDos={setToDos}
-              buttonClick={handleClick}
+              toggleModal={toggleModal}
             />
           )}
         </div>
