@@ -6,7 +6,7 @@ import { ToDoItem } from "./Components/To-DoItem";
 
 function App() {
   const [showModal, setShowModal] = useState(false);
-  const [toDos, setToDos] = useState();
+  const [toDos, setToDos] = useState([]);
 
   const toggleModal = (event) => {
     setShowModal(!showModal);
@@ -47,15 +47,14 @@ function App() {
           </button>
         </div>
         <div className="grid grid-rows-5">
-          {toDos &&
-            toDos.map((toDo, index) => (
-              <ToDoItem
-                key={index}
-                data={toDo}
-                checkToDo={checkToDo}
-                deleteToDo={deleteToDo}
-              />
-            ))}
+          {toDos.map((toDo, index) => (
+            <ToDoItem
+              key={index}
+              data={toDo}
+              checkToDo={checkToDo}
+              deleteToDo={deleteToDo}
+            />
+          ))}
           {showModal && (
             <Modal
               setShowModal={setShowModal}
