@@ -25,7 +25,10 @@ export const ToDoForm = ({
 
   return (
     <div className="rounded-lg w-full bg-gray-200">
-      <form onSubmit={handleSubmit} className="w-full grid grid-cols-3 flex">
+      <form
+        onSubmit={handleSubmit}
+        className="grid items-center justify-center grid-cols-1 gap-2 m-4"
+      >
         <div className="flex">
           <label className="m-2 text-md">To-Do Name:</label>
           <input
@@ -33,7 +36,7 @@ export const ToDoForm = ({
             type="text"
             name="toDoName"
             value={formData.toDoName}
-            className="m-2 pl-2 pr-2 h-8 rounded-md"
+            className="m-2 p-2 rounded-md flex-grow "
           />
         </div>
         <div className="flex">
@@ -43,13 +46,13 @@ export const ToDoForm = ({
             type="text"
             name="notes"
             value={formData.notes}
-            className="pl-2 pr-2 m-2 rounded-md w-64"
+            className="p-2 m-2 rounded-md flex-grow"
           />
         </div>
         <div className="flex">
           <label className="text-md m-2">Date:</label>
           <input
-            className="rounded-md pr-2 h-8 m-2 pl-2"
+            className="flex-grow rounded-md pr-2 h-8 m-2 pl-2"
             onChange={handleformDataChange}
             value={formData.date}
             type="date"
@@ -57,7 +60,7 @@ export const ToDoForm = ({
             id="finish by"
           />
           <input
-            className="rounded-md pr-2 h-8 m-2 pl-2"
+            className="flex-grow rounded-md pr-2 h-8 m-2 pl-2"
             onChange={handleformDataChange}
             value={formData.time}
             type="time"
@@ -66,15 +69,16 @@ export const ToDoForm = ({
             min={formattedDate}
           />
         </div>
-        <div className="grid grid-cols-3">
+
+        <div className="flex justify-center items-center">
           <button
-            className="m-2 pl-4 pr-4 shadow-md hover:drop-shadow-xl active:bg-blue-700 p-2 rounded-xl bg-blue-500 text-white"
+            className="m-2 ml-8 flex-1 shadow-md hover:drop-shadow-xl active:bg-blue-700 p-2 rounded-xl bg-blue-500 text-white"
             type="submit"
           >
             Submit
           </button>
           <button
-            className="m-2 pl-4 pr-4 shadow-md hover:drop-shadow-xl active:bg-blue-700 p-2 rounded-xl bg-blue-500 text-white"
+            className="m-2 mr-8 flex-1 shadow-md hover:drop-shadow-xl active:bg-blue-700 p-2 rounded-xl bg-blue-500 text-white"
             onClick={toggleModal}
           >
             Close

@@ -3,9 +3,15 @@ import { v4 as uuidv4 } from "uuid";
 
 import { ToDoForm } from "./To-DoForm";
 
-export const Modal = ({ toggleModal, setToDos, setShowModal }) => {
+export const Modal = ({
+  toggleModal,
+  setToDos,
+  setShowModal,
+  selectedList,
+}) => {
   const [formData, setFormData] = useState({
     id: "",
+    list: "",
     toDoName: "",
     notes: "",
     date: "",
@@ -19,6 +25,7 @@ export const Modal = ({ toggleModal, setToDos, setShowModal }) => {
 
     const newToDo = {
       id: newId,
+      list: selectedList.id,
       toDoName: formData.toDoName,
       notes: formData.notes,
       date: formData.date,
@@ -28,13 +35,14 @@ export const Modal = ({ toggleModal, setToDos, setShowModal }) => {
 
     const usersToDos = JSON.parse(localStorage.getItem("toDoData")) || [];
 
-    const updatedToDos = [...usersToDos, newToDo];
+    const updatedToDos = [newToDo, ...usersToDos];
 
     localStorage.setItem("toDoData", JSON.stringify(updatedToDos));
     setToDos(updatedToDos);
 
     setFormData({
       id: "",
+      list: "",
       toDoName: "",
       notes: "",
       date: "",
