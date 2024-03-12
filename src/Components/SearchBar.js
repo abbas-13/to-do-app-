@@ -1,3 +1,5 @@
+import { Box, TextField } from "@mui/material";
+
 export const SearchBar = ({ lists, setSearchResult, input, setInput }) => {
   const handleInputChange = (event) => {
     setInput(event.target.value);
@@ -20,14 +22,16 @@ export const SearchBar = ({ lists, setSearchResult, input, setInput }) => {
   return (
     <div>
       <form
-        className="flex p-2 rounded-lg items-center justify-center"
+        className="flex my-2 items-center justify-center"
         onSubmit={handleSearch}
       >
-        <input
-          className="rounded-xl shadow-md hover:drop-shadow-xl hover:bg-white p-2 w-96 bg-gray-100"
+        <TextField
+          size="small"
+          id="outlined-basic"
+          placeholder="Search"
+          variant="outlined"
           value={input}
           onChange={handleInputChange}
-          placeholder="Search"
         />
       </form>
     </div>

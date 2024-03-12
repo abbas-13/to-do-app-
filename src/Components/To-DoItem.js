@@ -1,4 +1,5 @@
-import { MdDeleteSweep } from "react-icons/md";
+import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
+import { Card } from "@mui/material";
 
 export const ToDoItem = ({ data, checkToDo, deleteToDo }) => {
   const toDoClassName = data.isChecked
@@ -6,7 +7,17 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }) => {
     : "ml-2 font-semibold";
 
   return (
-    <div className="bg-gray-200 rounded-lg w-full m-2 p-2">
+    <Card
+      variant="elevation"
+      raised
+      sx={{
+        margin: "10px",
+        minHeight: "80px",
+        padding: "8px",
+        borderRadius: "10px",
+        backgroundColor: "#FFFFFF",
+      }}
+    >
       <div className=" relative w-100%">
         <input
           type="checkbox"
@@ -15,8 +26,7 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }) => {
         />
         <label className={toDoClassName}> {data.toDoName}</label>
         <div className="absolute flex items-center mr-2 inset-y-0 right-0">
-          <MdDeleteSweep
-            className="size-5"
+          <DeleteSweepIcon
             onClick={() => deleteToDo(data.id)}
             style={{ cursor: "pointer" }}
           />
@@ -26,6 +36,6 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }) => {
         </div>
       </div>
       <p className="text-sm m-2 ml-6"> {data.notes}</p>
-    </div>
+    </Card>
   );
 };
