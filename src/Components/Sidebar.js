@@ -5,6 +5,8 @@ import { SelectListContext } from "../Context/SelectListContext";
 
 import { v4 as uuidv4 } from "uuid";
 import { useContext, useState } from "react";
+import { Button } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 export const Sidebar = () => {
   const [listCreated, setListCreated] = useState(true);
@@ -53,13 +55,10 @@ export const Sidebar = () => {
           input={input}
           setInput={setInput}
         />
-        <div className="flex items-center justify-center w-full">
-          <button
-            onClick={addList}
-            className="m-2 shadow-md hover:drop-shadow-xl active:bg-blue-700 p-2 pl-6 pr-6 rounded-xl bg-blue-500 text-white"
-          >
+        <div className="flex my-4 items-center justify-center w-full">
+          <Button variant="contained" onClick={addList} endIcon={<AddIcon />}>
             Create List
-          </button>
+          </Button>
         </div>
         {input?.length
           ? searchResult?.map((searchResult) => (
