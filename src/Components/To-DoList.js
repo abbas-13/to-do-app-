@@ -29,7 +29,7 @@ export const ToDoList = ({
           createList(inputValue);
           setListCreated(true);
         }}
-        className="flex max-w-fit items-center flex-grow"
+        className="flex max-w-fit m-2 items-center flex-grow"
       >
         <TextField
           id="standard-basic"
@@ -39,18 +39,15 @@ export const ToDoList = ({
           placeholder="List name..."
           value={inputValue}
         />
-      </form>
-
-      <div className="flex m-2 ml-auto items-center justify-center">
         <DeleteSweepIcon
-          className="size-5"
+          fontSize="medium"
           onClick={(event) => {
             event.stopPropagation();
             deleteList(list.id);
           }}
           style={{ cursor: "pointer" }}
         />
-      </div>
+      </form>
     </Box>
   );
 };

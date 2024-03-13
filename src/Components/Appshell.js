@@ -29,10 +29,15 @@ export const Appshell = ({ children }) => {
             />
           </Button>
 
-          <Box onClick={toggleDrawer(false)}>
+          <Box>
             {open && <MobileSidebar open={open} toggleDrawer={toggleDrawer} />}
           </Box>
-          <main className="flex-1 p-4 overflow-x-hidden">{children}</main>
+          <main
+            onClick={toggleDrawer(false)}
+            className="flex-1 p-4 overflow-x-hidden"
+          >
+            {children}
+          </main>
         </div>
       )}
     </div>

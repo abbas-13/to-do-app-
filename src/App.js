@@ -93,7 +93,7 @@ function App() {
                 </Button>
               ) : null}
 
-              <div className="grid grid-rows-5">
+              <div>
                 {toDos
                   .filter((toDo) => toDo.list === selectedList?.id)
                   .map((toDo, index) => (
