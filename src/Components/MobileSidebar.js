@@ -42,7 +42,18 @@ export const MobileSidebar = ({ open, toggleDrawer }) => {
     selectList(null);
   };
   return (
-    <Drawer open={open} onClose={toggleDrawer(false)}>
+    <Drawer
+      open={open}
+      onClose={toggleDrawer(false)}
+      elevation={20}
+      sx={{
+        transition: "width 0.3s ease",
+        "& .MuiDrawer-paper": {
+          width: "240px",
+          transition: "width 0.3s ease",
+        },
+      }}
+    >
       <SearchBar
         setSearchResult={setSearchResult}
         lists={lists}

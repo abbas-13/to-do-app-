@@ -22,7 +22,7 @@ export const SearchBar = ({ lists, setSearchResult, input, setInput }) => {
   return (
     <div>
       <form
-        className="flex my-2 items-center justify-center"
+        className="flex m-2 mx-5 items-center justify-center"
         onSubmit={handleSearch}
       >
         <TextField

@@ -77,9 +77,11 @@ function App() {
           <div>
             <Appshell>
               <ThemeProvider theme={theme}>
-                <Typography variant="h3">Reminders</Typography>
+                <Typography fontWeight="bold" variant="h3">
+                  Reminders
+                </Typography>
               </ThemeProvider>
-              <Typography variant="h5">{selectedList?.name || ""}</Typography>
+              <Typography variant="h6">{selectedList?.name || ""}</Typography>
               <div className="border border-gray-200 m-2"></div>
 
               {selectedList?.name ? (
