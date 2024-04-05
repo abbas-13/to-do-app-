@@ -1,4 +1,12 @@
 import { useEffect, useState } from "react";
+import {
+  Button,
+  createTheme,
+  CssBaseline,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 import { Appshell } from "./Components/Appshell";
 import { Modal } from "./Components/Modal";
@@ -13,6 +21,18 @@ function App() {
   const [lists, setLists] = useState([]);
 
   const [selectedList, setSelectedList] = useState();
+
+  const theme = createTheme();
+
+  theme.typography.h3 = {
+    fontSize: "1.4rem",
+    "@media (min-width:600px)": {
+      fontSize: "1.6rem",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "2.6rem",
+    },
+  };
 
   const selectList = (id, name) => {
     setSelectedList({ id, name });
@@ -52,43 +72,52 @@ function App() {
       value={{ selectList, selectedList, setSelectedList }}
     >
       <ListsContext.Provider value={{ lists, setLists }}>
-        <div>
-          <Appshell>
-            <h2 className="text-2xl font-semibold p-2">Reminders</h2>
-            <h2 className="text-2xl p-2">{selectedList?.name || ""}</h2>
-            <div className="border border-gray-200 m-2"></div>
-            <div className="grid grid-cols-8">
+        <>
+          <CssBaseline />
+          <div>
+            <Appshell>
+              <ThemeProvider theme={theme}>
+                <Typography fontWeight="bold" variant="h3">
+                  Reminders
+                </Typography>
+              </ThemeProvider>
+              <Typography variant="h6">{selectedList?.name || ""}</Typography>
+              <div className="border border-gray-200 m-2"></div>
+
               {selectedList?.name ? (
-                <button
+                <Button
                   onClick={toggleModal}
-                  className="m-2 shadow-md hover:drop-shadow-xl active:bg-blue-700 p-2 rounded-xl bg-blue-500 text-white"
+                  sx={{ width: "100px", margin: "8px" }}
+                  variant="contained"
+                  endIcon={<AddIcon />}
                 >
-                  Add +
-                </button>
+                  Add
+                </Button>
               ) : null}
-            </div>
-            <div className="grid grid-rows-5">
-              {toDos
-                .filter((toDo) => toDo.list === selectedList?.id)
-                .map((toDo, index) => (
-                  <ToDoItem
-                    key={index}
-                    data={toDo}
-                    checkToDo={checkToDo}
-                    deleteToDo={deleteToDo}
+
+              <div>
+                {toDos
+                  .filter((toDo) => toDo.list === selectedList?.id)
+                  .map((toDo, index) => (
+                    <ToDoItem
+                      key={index}
+                      data={toDo}
+                      checkToDo={checkToDo}
+                      deleteToDo={deleteToDo}
+                    />
+                  ))}
+                {showModal && (
+                  <Modal
+                    selectedList={selectedList}
+                    setShowModal={setShowModal}
+                    setToDos={setToDos}
+                    toggleModal={toggleModal}
                   />
-                ))}
-              {showModal && (
-                <Modal
-                  selectedList={selectedList}
-                  setShowModal={setShowModal}
-                  setToDos={setToDos}
-                  toggleModal={toggleModal}
-                />
-              )}
-            </div>
-          </Appshell>
-        </div>
+                )}
+              </div>
+            </Appshell>
+          </div>
+        </>
       </ListsContext.Provider>
     </SelectListContext.Provider>
   );
