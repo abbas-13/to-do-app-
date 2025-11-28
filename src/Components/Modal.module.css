@@ -1,0 +1,9 @@
+@reference "../App.css";
+
+.modal-background {
+  @apply fixed inset-0 flex justify-center items-center min-h-screen w-full bg-gray-500/50;
+}
+
+.modal-body {
+  @apply p-2 bg-white flex flex-col items-center shadow-lg justify-center border border-gray-200 rounded-lg;
+}
