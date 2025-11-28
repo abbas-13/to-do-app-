@@ -6,7 +6,7 @@ export interface ToDoState {
   isChecked: boolean;
   list: string;
   toDoName: string;
-  date?: Date;
+  date: string;
   notes: string;
   time: string;
 }
@@ -43,7 +43,6 @@ export interface ModalProps {
   toggleModal: React.MouseEventHandler<HTMLDivElement | HTMLButtonElement>;
   setToDos: Dispatch<SetStateAction<ToDoState[]>>;
   setShowModal: (arg0: boolean) => void;
-  selectedList: SelectedListState;
 }
 
 export interface SearchBarProps {

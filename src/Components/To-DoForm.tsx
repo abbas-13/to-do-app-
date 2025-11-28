@@ -64,12 +64,11 @@ export const ToDoForm = ({ toggleModal, onSubmit }: ToDoFormProps) => {
         </div>
 
         <div className="flex justify-center items-center">
-          <button
+          <input
             className="m-2 ml-8 flex-1 shadow-md hover:drop-shadow-xl active:bg-blue-700 p-2 rounded-xl bg-blue-500 text-white"
             type="submit"
-          >
-            Submit
-          </button>
+            onClick={handleSubmit(onSubmit)}
+          />
           <button
             className="m-2 mr-8 flex-1 shadow-md hover:drop-shadow-xl active:bg-blue-700 p-2 rounded-xl bg-blue-500 text-white"
             onClick={toggleModal}
