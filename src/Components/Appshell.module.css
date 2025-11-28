@@ -1,0 +1,9 @@
+@reference "../App.css";
+
+.appshell-md {
+  @apply h-full flex;
+}
+
+.children-container {
+  @apply flex-1 p-4 overflow-x-hidden;
+}

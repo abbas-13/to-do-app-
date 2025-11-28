@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 
 import type { ToDoFormInput, ToDoFormProps } from "../assets/Types";
+import styles from "./To-DoForm.module.css";
 
 export const ToDoForm = ({ toggleModal, onSubmit }: ToDoFormProps) => {
   const { register, handleSubmit } = useForm<ToDoFormInput>();
@@ -15,10 +16,10 @@ export const ToDoForm = ({ toggleModal, onSubmit }: ToDoFormProps) => {
     .padStart(2, "0")}/${year}`;
 
   return (
-    <div className="rounded-lg w-full bg-gray-200">
+    <div className={styles["form-container"]}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="grid items-center justify-center grid-cols-1 gap-2 m-4"
+        className={styles["todo-input-form"]}
       >
         <div className="flex">
           <label className="m-2 text-md">To-Do Name:</label>
@@ -28,7 +29,7 @@ export const ToDoForm = ({ toggleModal, onSubmit }: ToDoFormProps) => {
             })}
             type="text"
             name="toDoName"
-            className="m-2 p-2 rounded-md flex-grow "
+            className={styles["todo-input-field"]}
           />
         </div>
         <div className="flex">
@@ -37,7 +38,7 @@ export const ToDoForm = ({ toggleModal, onSubmit }: ToDoFormProps) => {
             {...register("notes", { required: "Please enter your notes" })}
             type="text"
             name="notes"
-            className="p-2 m-2 rounded-md flex-grow"
+            className={styles["todo-input-field"]}
           />
         </div>
         <div className="flex">
@@ -46,13 +47,13 @@ export const ToDoForm = ({ toggleModal, onSubmit }: ToDoFormProps) => {
             {...register("date", {
               required: "Please enter the deadline date of your ToDo",
             })}
-            className="flex-grow rounded-md pr-2 h-8 m-2 pl-2"
+            className={styles["todo-date-time"]}
             type="date"
             name="date"
             id="finish by"
           />
           <input
-            className="flex-grow rounded-md pr-2 h-8 m-2 pl-2"
+            className={styles["todo-date-time"]}
             {...register("toDoName", {
               required: "Please enter the deadline time of your ToDo",
             })}
@@ -65,12 +66,12 @@ export const ToDoForm = ({ toggleModal, onSubmit }: ToDoFormProps) => {
 
         <div className="flex justify-center items-center">
           <input
-            className="m-2 ml-8 flex-1 shadow-md hover:drop-shadow-xl active:bg-blue-700 p-2 rounded-xl bg-blue-500 text-white"
+            className={`${styles["todo-form-buttons"]} ml-8`}
             type="submit"
             onClick={handleSubmit(onSubmit)}
           />
           <button
-            className="m-2 mr-8 flex-1 shadow-md hover:drop-shadow-xl active:bg-blue-700 p-2 rounded-xl bg-blue-500 text-white"
+            className={`${styles["todo-form-buttons"]} mr-8`}
             onClick={toggleModal}
           >
             Close
