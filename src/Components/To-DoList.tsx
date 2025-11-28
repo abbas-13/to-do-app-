@@ -1,19 +1,17 @@
 import { useContext, useState } from "react";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
-import { SelectListContext } from "../Context/SelectListContext";
 import { TextField, Box } from "@mui/material";
 
-export const ToDoList = ({
-  list,
-  deleteList,
-  createList,
-  listCreated,
-  setListCreated,
-}) => {
+import { SelectListContext } from "../Context/SelectListContext";
+import type { ToDoListProps } from "../assets/Types";
+
+export const ToDoList = ({ list, deleteList, createList }: ToDoListProps) => {
   const { selectList } = useContext(SelectListContext);
   const [inputValue, setInputValue] = useState(list.name || "");
 
-  const handleListNameChange = (event) => {
+  const handleListNameChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setInputValue(event.target.value);
   };
 
@@ -27,7 +25,6 @@ export const ToDoList = ({
         onSubmit={(event) => {
           event.preventDefault();
           createList(inputValue);
-          setListCreated(true);
         }}
         className="flex max-w-fit m-2 items-center flex-grow"
       >

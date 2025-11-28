@@ -1,36 +1,30 @@
 # To-Do App
 
-An easy to use to-do app that helps in task management. 
+An easy to use to-do app that helps in task management.
 
 ### Features
 
-
-
 Create Tasks: Easily add new tasks to your to-do list.
 
-Delete Tasks: Remove tasks that are no longer needed. 
+Delete Tasks: Remove tasks that are no longer needed.
 
-Check off Tasks: Mark tasks as completed once they are done. 
-
+Check off Tasks: Mark tasks as completed once they are done.
 
 ## Installation
 
 ### Clone the repo:
 
-``` git clone https://github.com/abbas-13-to-do-app- ```
-
+`git clone https://github.com/abbas-13-to-do-app-`
 
 ### Navigate to the directory and install dependencies:
 
-``` npm install ```
-
+`npm install`
 
 ### Run the app:
 
-``` npm start ```
+`npm start`
 
 Open your web browser and go to (http://localhost:3000) to view the app.
-
 
 # Usage
 
@@ -47,3 +41,10 @@ Switching Lists: Click on any list in the sidebar to switch and view the tasks i
 Delete List: Click on the trash icon to delete a list.
 
 Searching Lists: Enter a keyword in the search bar to search for the list by name.
+
+## Tech used:
+
+- Powered by Vite
+- Created with React.js + TypeScript
+- MaterialUI for component
+- TailwindCSS for styling

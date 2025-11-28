@@ -1,11 +1,11 @@
-export const ToDoForm = ({
-  toggleModal,
-  formData,
-  setFormData,
-  handleSubmit,
-}) => {
-  const today = new Date();
+import { useForm } from "react-hook-form";
 
+import type { ToDoFormInput, ToDoFormProps } from "../assets/Types";
+
+export const ToDoForm = ({ toggleModal, onSubmit }: ToDoFormProps) => {
+  const { register, handleSubmit } = useForm<ToDoFormInput>();
+
+  const today = new Date();
   const day = today.getDate();
   const month = today.getMonth() + 1;
   const year = today.getFullYear();
@@ -14,55 +14,48 @@ export const ToDoForm = ({
     .toString()
     .padStart(2, "0")}/${year}`;
 
-  const handleformDataChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
   return (
     <div className="rounded-lg w-full bg-gray-200">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="grid items-center justify-center grid-cols-1 gap-2 m-4"
       >
         <div className="flex">
           <label className="m-2 text-md">To-Do Name:</label>
           <input
-            onChange={handleformDataChange}
+            {...register("toDoName", {
+              required: "Please enter the name of your ToDo",
+            })}
             type="text"
             name="toDoName"
-            value={formData.toDoName}
             className="m-2 p-2 rounded-md flex-grow "
           />
         </div>
         <div className="flex">
           <label className="text-md m-2">Notes:</label>
           <input
-            onChange={handleformDataChange}
+            {...register("notes", { required: "Please enter your notes" })}
             type="text"
             name="notes"
-            value={formData.notes}
             className="p-2 m-2 rounded-md flex-grow"
           />
         </div>
         <div className="flex">
           <label className="text-md m-2">Date:</label>
           <input
+            {...register("date", {
+              required: "Please enter the deadline date of your ToDo",
+            })}
             className="flex-grow rounded-md pr-2 h-8 m-2 pl-2"
-            onChange={handleformDataChange}
-            value={formData.date}
             type="date"
             name="date"
             id="finish by"
           />
           <input
             className="flex-grow rounded-md pr-2 h-8 m-2 pl-2"
-            onChange={handleformDataChange}
-            value={formData.time}
+            {...register("toDoName", {
+              required: "Please enter the deadline time of your ToDo",
+            })}
             type="time"
             name="time"
             id="finish by"
