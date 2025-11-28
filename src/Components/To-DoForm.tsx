@@ -5,15 +5,6 @@ import type { ToDoFormInput, ToDoFormProps } from "../assets/Types";
 export const ToDoForm = ({ toggleModal, onSubmit }: ToDoFormProps) => {
   const { register, handleSubmit } = useForm<ToDoFormInput>();
 
-  const today = new Date();
-  const day = today.getDate();
-  const month = today.getMonth() + 1;
-  const year = today.getFullYear();
-
-  const formattedDate = `${day.toString().padStart(2, "0")}/${month
-    .toString()
-    .padStart(2, "0")}/${year}`;
-
   return (
     <div className="rounded-lg w-full bg-gray-200">
       <form
@@ -53,21 +44,18 @@ export const ToDoForm = ({ toggleModal, onSubmit }: ToDoFormProps) => {
           />
           <input
             className="flex-grow rounded-md pr-2 h-8 m-2 pl-2"
-            {...register("toDoName", {
+            {...register("time", {
               required: "Please enter the deadline time of your ToDo",
             })}
             type="time"
             name="time"
             id="finish by"
-            min={formattedDate}
           />
         </div>
-
         <div className="flex justify-center items-center">
           <input
             className="m-2 ml-8 flex-1 shadow-md hover:drop-shadow-xl active:bg-blue-700 p-2 rounded-xl bg-blue-500 text-white"
             type="submit"
-            onClick={handleSubmit(onSubmit)}
           />
           <button
             className="m-2 mr-8 flex-1 shadow-md hover:drop-shadow-xl active:bg-blue-700 p-2 rounded-xl bg-blue-500 text-white"

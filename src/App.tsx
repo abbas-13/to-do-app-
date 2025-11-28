@@ -47,7 +47,6 @@ const App = () => {
 
   const toggleModal = () => {
     setShowModal(!showModal);
-    console.log(showModal, "WHAT");
   };
 
   const checkToDo = (toDoId: string) => {

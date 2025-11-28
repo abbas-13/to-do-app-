@@ -6,7 +6,7 @@ export interface ToDoState {
   isChecked: boolean;
   list: string;
   toDoName: string;
-  date: string;
+  date: Date;
   notes: string;
   time: string;
 }
