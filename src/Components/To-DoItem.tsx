@@ -30,13 +30,13 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }: ToDoItemProps) => {
       }}
     >
       <Grid container spacing={0.5}>
-        <Grid>
+        <div className="mx-2">
           <input
             type="checkbox"
             checked={data.isChecked}
             onChange={() => checkToDo(data.id)}
           />
-        </Grid>
+        </div>
         <Grid component="div" size={{ xs: 9, md: 9, lg: 10 }}>
           {toDoLabel}
         </Grid>
@@ -44,7 +44,7 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }: ToDoItemProps) => {
           <DeleteSweepIcon
             fontSize="small"
             onClick={() => deleteToDo(data.id)}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", marginLeft: "8px" }}
           />
           <label className="ml-2 text-xs sm:text-sm">
             {data.date.toString()}
