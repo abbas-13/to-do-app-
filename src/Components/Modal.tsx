@@ -3,13 +3,11 @@ import { type SubmitHandler } from "react-hook-form";
 
 import { ToDoForm } from "./To-DoForm";
 import type { ModalProps, ToDoFormInput } from "../assets/Types";
+import { useContext } from "react";
+import { SelectListContext } from "../Context/SelectListContext";
 
-export const Modal = ({
-  toggleModal,
-  setToDos,
-  setShowModal,
-  selectedList,
-}: ModalProps) => {
+export const Modal = ({ toggleModal, setToDos, setShowModal }: ModalProps) => {
+  const { selectedList } = useContext(SelectListContext);
   const onSubmit: SubmitHandler<ToDoFormInput> = (data) => {
     const newId = uuidv4();
 
@@ -37,7 +35,7 @@ export const Modal = ({
   return (
     <div
       id="modal"
-      className="fixed inset-0 flex justify-center items-center min-h-screen w-full bg-gray-200 bg-opacity-50"
+      className="fixed inset-0 flex justify-center items-center min-h-screen w-full bg-gray-500/50"
       onClick={toggleModal}
     >
       <div

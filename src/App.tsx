@@ -45,11 +45,9 @@ const App = () => {
     setSelectedList({ id, name: name ? name : "" });
   };
 
-  const toggleModal = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const toggleModal = () => {
     setShowModal(!showModal);
-    event.preventDefault();
+    console.log(showModal, "WHAT");
   };
 
   const checkToDo = (toDoId: string) => {
@@ -118,7 +116,6 @@ const App = () => {
                 ))}
               {showModal && (
                 <Modal
-                  selectedList={selectedList}
                   setShowModal={setShowModal}
                   setToDos={setToDos}
                   toggleModal={toggleModal}

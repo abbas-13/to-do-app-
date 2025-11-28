@@ -46,9 +46,7 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }: ToDoItemProps) => {
             onClick={() => deleteToDo(data.id)}
             style={{ cursor: "pointer" }}
           />
-          <label className="ml-2 text-xs sm:text-sm">
-            {data?.date?.toLocaleDateString()}
-          </label>
+          <label className="ml-2 text-xs sm:text-sm">{data.date}</label>
           <label className="ml-2 text-xs sm:text-sm">{data.time}</label>
         </Grid>
       </Grid>
