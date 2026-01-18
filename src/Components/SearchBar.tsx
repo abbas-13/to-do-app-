@@ -1,6 +1,5 @@
-import { TextField } from "@mui/material";
-
 import type { SearchBarProps } from "../assets/Types";
+import { Input } from "@/Components/ui/input";
 
 export const SearchBar = ({
   lists,
@@ -28,14 +27,12 @@ export const SearchBar = ({
 
   return (
     <form
-      className="flex m-2 mx-5 items-center justify-center"
+      className="flex m-2 items-center justify-center"
       onSubmit={handleSearch}
     >
-      <TextField
-        size="small"
+      <Input
         id="outlined-basic"
         placeholder="Search"
-        variant="outlined"
         value={input}
         onChange={handleInputChange}
       />

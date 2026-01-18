@@ -1,11 +1,7 @@
 @reference "../App.css";
 
-.form-container {
-  @apply rounded-sm w-full bg-gray-200;
-}
-
 .todo-form {
-  @apply grid items-center justify-center grid-cols-1 gap-2 m-4;
+  @apply grid items-center justify-center grid-cols-1 gap-2 p-2 pb-4 px-4;
 }
 
 .todo-input-field {
