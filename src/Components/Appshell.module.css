@@ -1,9 +1,13 @@
 @reference "../App.css";
 
 .appshell-md {
-  @apply h-full flex;
+  @apply h-[calc(100%_-_54px)] flex;
 }
 
 .children-container {
-  @apply flex-1 p-4 overflow-x-hidden;
+  @apply flex-1 p-4 overflow-x-hidden bg-[#F5FAFE];
+}
+
+.mobile-children-container {
+  @apply flex-1 p-4 bg-[#F5FAFE];
 }

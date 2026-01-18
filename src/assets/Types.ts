@@ -38,13 +38,6 @@ export interface ToDoFormInput {
   date: Date;
   time: string;
 }
-
-export interface ModalProps {
-  toggleModal: React.MouseEventHandler<HTMLDivElement | HTMLButtonElement>;
-  setToDos: Dispatch<SetStateAction<ToDoState[]>>;
-  setShowModal: (arg0: boolean) => void;
-}
-
 export interface SearchBarProps {
   lists: ListsStateType[];
   setSearchResult: Dispatch<SetStateAction<ListsStateType[]>>;
@@ -53,8 +46,10 @@ export interface SearchBarProps {
 }
 
 export interface ToDoFormProps {
-  toggleModal: React.MouseEventHandler<HTMLDivElement | HTMLButtonElement>;
   onSubmit: SubmitHandler<ToDoFormInput>;
+  isDialogOpen: boolean;
+  setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
+  isSubmitSuccessful: boolean;
 }
 
 export interface ToDoItemProps {
