@@ -9,6 +9,7 @@ export interface ToDoState {
   date: string;
   notes: string;
   time: string;
+  priority: string;
 }
 
 export interface SelectedListState {
@@ -37,6 +38,7 @@ export interface ToDoFormInput {
   notes: string;
   date: Date;
   time: string;
+  priority: string;
 }
 export interface SearchBarProps {
   lists: ListsStateType[];

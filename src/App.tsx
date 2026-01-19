@@ -27,7 +27,7 @@ const App = () => {
 
   const onSubmit: SubmitHandler<ToDoFormInput> = async (data) => {
     const newId = uuidv4();
-
+    console.log(data);
     const newToDo = {
       id: newId,
       list: selectedList.id,
@@ -36,6 +36,7 @@ const App = () => {
       date: data.date,
       time: data.time,
       isChecked: false,
+      priority: data.priority,
     };
 
     const usersToDos =

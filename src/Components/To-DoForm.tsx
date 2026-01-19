@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Plus } from "lucide-react";
+import { ErrorMessage } from "@hookform/error-message";
 
 import {
   Dialog,
@@ -17,6 +18,14 @@ import { Textarea } from "./ui/textarea";
 import type { ToDoFormInput, ToDoFormProps } from "../assets/Types";
 import { SelectListContext } from "@/Context/SelectListContext";
 import styles from "./To-DoForm.module.css";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 export const ToDoForm = ({
   onSubmit,
@@ -24,7 +33,13 @@ export const ToDoForm = ({
   setIsDialogOpen,
   isSubmitSuccessful,
 }: ToDoFormProps) => {
-  const { register, handleSubmit, reset } = useForm<ToDoFormInput>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm<ToDoFormInput>();
   const { selectedList } = useContext(SelectListContext);
 
   const today = new Date();
@@ -63,43 +78,136 @@ export const ToDoForm = ({
             <label className="text-xs font-semibold md:text-sm">
               To-Do Name:
             </label>
-            <Input
-              {...register("toDoName", {
-                required: "Please enter the name of your ToDo",
-              })}
-              type="text"
-              name="toDoName"
-            />
+            <div>
+              <Input
+                {...register("toDoName", {
+                  required: "Please enter to-do name",
+                })}
+                type="text"
+                name="toDoName"
+                placeholder="To do name"
+              />
+              <ErrorMessage
+                errors={errors}
+                name="toDoName"
+                render={({ message }) => (
+                  <p className="text-xs text-red-500 mt-1 text-center">
+                    {message}
+                  </p>
+                )}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-[30%_70%] py-2">
+            <label className="text-xs font-semibold md:text-sm">
+              Priority:
+            </label>
+            <div>
+              <Controller
+                name="priority"
+                control={control}
+                rules={{ required: "Please select a priority" }}
+                render={({ field }) => (
+                  <>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a priority" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {[
+                            { label: "High", value: "high" },
+                            { label: "Medium", value: "medium" },
+                            { label: "Low", value: "low" },
+                          ].map((item) => (
+                            <SelectItem key={item.value} value={item.value}>
+                              {item.label}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                    <ErrorMessage
+                      errors={errors}
+                      name="priority"
+                      render={({ message }) => (
+                        <p className="text-xs text-red-500 mt-1 text-center">
+                          {message}
+                        </p>
+                      )}
+                    />
+                  </>
+                )}
+              />
+            </div>
           </div>
           <div className="grid grid-cols-[30%_70%] py-2">
             <label className="text-xs font-semibold md:text-sm">Notes:</label>
-            <Textarea
-              {...register("notes", { required: "Please enter your notes" })}
-              name="notes"
-            />
+            <div>
+              <Textarea
+                {...register("notes", {
+                  required: "Please enter notes description",
+                })}
+                name="notes"
+              />
+              <ErrorMessage
+                errors={errors}
+                name="notes"
+                render={({ message }) => (
+                  <p className="text-xs text-red-500 mt-1 text-center">
+                    {message}
+                  </p>
+                )}
+              />
+            </div>
           </div>
           <div className="grid grid-cols-[30%_70%] py-2">
             <label className="text-xs font-semibold md:text-sm">Date:</label>
             <div className="flex gap-2">
-              <Input
-                {...register("date", {
-                  required: "Please enter the deadline date of your ToDo",
-                })}
-                type="date"
-                name="date"
-                id="finish by"
-                className="text-xs md:text-sm"
-              />
-              <Input
-                {...register("time", {
-                  required: "Please enter the deadline time of your ToDo",
-                })}
-                type="time"
-                name="time"
-                id="finish by"
-                className="text-xs md:text-sm pl-2 pr-0 md:py-1 md:px-3"
-                min={formattedDate}
-              />
+              <div>
+                <Input
+                  {...register("date", {
+                    required: "Please select deadline date",
+                  })}
+                  type="date"
+                  name="date"
+                  id="finish by"
+                  className="text-xs md:text-sm"
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="date"
+                  render={({ message }) => (
+                    <p className="text-xs text-red-500 mt-1 text-center">
+                      {message}
+                    </p>
+                  )}
+                />
+              </div>
+              <div>
+                <Input
+                  {...register("time", {
+                    required: "Please select deadline time",
+                  })}
+                  type="time"
+                  name="time"
+                  id="finish by"
+                  className="text-xs md:text-sm pl-2 pr-0 md:py-1 md:px-3"
+                  min={formattedDate}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="time"
+                  render={({ message }) => (
+                    <p className="text-xs text-red-500 mt-1 text-center">
+                      {message}
+                    </p>
+                  )}
+                />
+              </div>
             </div>
           </div>
           <div className="border border-gray-200 my-2"></div>

@@ -13,6 +13,21 @@ import {
 } from "@/Components/ui/menubar";
 
 export const ToDoItem = ({ data, checkToDo, deleteToDo }: ToDoItemProps) => {
+  const priorityColour = () => {
+    switch (data.priority) {
+      case "high":
+        return "bg-red-200";
+      case "medium":
+        return "bg-yellow-300";
+      case "low":
+        return "bg-green-200";
+      default:
+        return "bg-transparent";
+    }
+  };
+
+  console.log(priorityColour());
+
   return (
     <Card className="bg-[#FAFBFF] rounded-md px-4 py-2">
       <div className="flex gap-2 justify-between">
@@ -31,6 +46,9 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }: ToDoItemProps) => {
             >
               {data.toDoName}
             </p>
+            <div className={`rounded-sm text-sm px-2 ${priorityColour()}`}>
+              <p>{data.priority}</p>
+            </div>
           </div>
           <p
             className={`leading-7 text-xs ml-6 ${
