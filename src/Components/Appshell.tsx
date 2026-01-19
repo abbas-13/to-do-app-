@@ -21,7 +21,11 @@ export const Appshell = ({ children }: AppShellProps) => {
         <>
           <Navbar />
           <div className={styles["appshell-md"]}>
-            <SidebarProvider open={open} onOpenChange={setOpen}>
+            <SidebarProvider
+              className="h-full min-h-full"
+              open={open}
+              onOpenChange={setOpen}
+            >
               <Sidebar />
               <main className={styles["children-container"]}>{children}</main>
             </SidebarProvider>
