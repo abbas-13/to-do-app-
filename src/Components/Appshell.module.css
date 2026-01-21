@@ -5,7 +5,7 @@
 }
 
 .children-container {
-  @apply flex-1 p-4 overflow-x-hidden bg-[#F5FAFE];
+  @apply flex-1 p-4 h-full bg-[#F5FAFE];
 }
 
 .mobile-children-container {

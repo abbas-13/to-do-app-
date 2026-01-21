@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Plus } from "lucide-react";
 import { ErrorMessage } from "@hookform/error-message";
@@ -10,14 +10,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
+} from "@/Components/ui/dialog";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
-import { Textarea } from "./ui/textarea";
-
-import type { ToDoFormInput, ToDoFormProps } from "../assets/Types";
-import { SelectListContext } from "@/Context/SelectListContext";
-import styles from "./To-DoForm.module.css";
+import { Textarea } from "@/Components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -25,7 +21,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "@/Components/ui/select";
+import type { ToDoFormInput, ToDoFormProps } from "../assets/Types";
+import styles from "./To-DoForm.module.css";
 
 export const ToDoForm = ({
   onSubmit,
@@ -40,7 +38,6 @@ export const ToDoForm = ({
     control,
     formState: { errors },
   } = useForm<ToDoFormInput>();
-  const { selectedList } = useContext(SelectListContext);
 
   const today = new Date();
   const day = today.getDate();
@@ -58,15 +55,13 @@ export const ToDoForm = ({
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        {selectedList?.name ? (
-          <Button
-            className="mx-2 bg-[#2097f3] hover:bg-[#FFFFFF] hover:border-2 hover:border-[#2097f3] active:bg-[#2097f3] active:text-white active:outline-2 active:outline-[#85C7F8] hover:text-black hover:shadow-lg active:shadow-none active:border-1 active:border-white text-white"
-            variant="outline"
-          >
-            Add
-            <Plus strokeWidth={3} />
-          </Button>
-        ) : null}
+        <Button
+          className="bg-[#2097f3] px-3 md:px-4 gap-1 md:gap-2 hover:bg-[#FFFFFF] hover:border-2 hover:border-[#2097f3] active:bg-[#2097f3] active:text-white active:outline-2 active:outline-[#85C7F8] hover:text-black hover:shadow-lg active:shadow-none active:border-1 active:border-white text-white"
+          variant="outline"
+        >
+          Add Task
+          <Plus strokeWidth={3} />
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[380px]! rounded-lg md:max-w-[420px]! p-0!">
         <DialogHeader className="pt-4 pl-4 text-left">
