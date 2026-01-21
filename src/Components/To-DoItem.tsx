@@ -1,5 +1,4 @@
 import { Trash, CalendarDays, Clock, EllipsisVertical } from "lucide-react";
-import { Card } from "@/Components/ui/card";
 import { Checkbox } from "@/Components//ui/checkbox";
 
 import type { ToDoItemProps } from "../assets/Types";
@@ -28,9 +27,9 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }: ToDoItemProps) => {
 
   return (
     <>
-      <Card className="bg-transparent shadow-none border-0 mx-4">
+      <>
         <div className="flex justify-between">
-          <div className="grid">
+          <div className="grid w-[60%] md:min-w-[75%] lg:min-w-[80%]">
             <div className="flex items-center gap-2 h-full">
               <Checkbox
                 className="data-[state=checked]:border-2 data-[state=checked]:border-white data-[state=checked]:outline-1 rounded-[8px] data-[state=checked]:bg-[#2097f3] data-[state=checked]:text-transparent dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
@@ -50,14 +49,14 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }: ToDoItemProps) => {
               </div>
             </div>
             <p
-              className={`leading-7 text-xs ml-6 max-w-[180px] md:max-w-auto ${
+              className={`leading-7 text-xs ml-6 max-w-[180px] md:min-w-full ${
                 data.isChecked && "text-[#A9A9A9]"
               }`}
             >
               {data.notes}
             </p>
           </div>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 min-w-">
             <label
               className={`ml-2 text-xs sm:text-xs flex items-center gap-2 ${
                 data.isChecked && "text-[#A9A9A9]"
@@ -93,7 +92,7 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }: ToDoItemProps) => {
             </div>
           </div>
         </div>
-      </Card>
+      </>
       <div className="border border-gray-200 m-2"></div>
     </>
   );
