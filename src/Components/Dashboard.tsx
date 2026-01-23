@@ -65,6 +65,7 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
       time: data.time,
       isChecked: false,
       priority: data.priority,
+      dateCreated: new Date(),
     };
 
     const usersToDos =

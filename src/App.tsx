@@ -26,8 +26,14 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       const storedToDos = JSON.parse(localStorage.getItem("toDoData") ?? "[]");
-      setToDos(storedToDos);
-      const storedLists = JSON.parse(localStorage.getItem("toDoLists") ?? "[]");
+      const updatedToDos = storedToDos.sort(
+        (a: ToDoState, b: ToDoState) =>
+          new Date(b.date).valueOf() - new Date(a.date).valueOf(),
+      );
+      setToDos(updatedToDos);
+
+      const response = await fetch(`/api/lists`);
+      const storedLists = await response.json();
       setLists(storedLists);
     };
     fetchData();

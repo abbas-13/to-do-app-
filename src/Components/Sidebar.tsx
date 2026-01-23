@@ -24,23 +24,61 @@ export const Sidebar = () => {
     selectList(newId, "");
   };
 
-  const createList = (name: string) => {
-    const updatedToDoLists = lists.map((list: ListsStateType) =>
-      list.name || !list.id ? list : { ...list, name }
-    );
+  const createList = async (name: string): Promise<void> => {
+    try {
+      const updatedToDoLists = lists.map((list: ListsStateType) =>
+        list.name || !list.id ? list : { ...list, name },
+      );
 
-    localStorage.setItem("toDoLists", JSON.stringify(updatedToDoLists));
-    setLists(updatedToDoLists);
-    setSelectedList(updatedToDoLists[0]);
+      const response = await fetch(`/api/lists`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedToDoLists[0]),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
+
+      setLists(updatedToDoLists);
+      setSelectedList(updatedToDoLists[0]);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Unkown error occurred";
+      console.error("Create list failed: ", errorMessage);
+      alert(`Failed to create list: ${errorMessage}`);
+    }
   };
 
-  const deleteList = (id: string) => {
-    const updatedToDoLists = lists.filter(
-      (toDoList: { id: string }) => toDoList.id !== id
-    );
-    localStorage.setItem("toDoLists", JSON.stringify(updatedToDoLists));
-    setLists(updatedToDoLists);
-    selectList("", "");
+  const deleteList = async (id: string): Promise<void> => {
+    try {
+      const response = await fetch(`/api/lists/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
+
+      const successData = await response.json();
+      console.log("delete success: ", successData.message);
+
+      const updatedToDoLists = lists.filter(
+        (toDoList: { id: string }) => toDoList.id !== id,
+      );
+
+      setLists(updatedToDoLists);
+      selectList("", "");
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Unkown error occurred";
+      console.error("Delete list failed: ", errorMessage);
+      alert(`Failed to delete list: ${errorMessage}`);
+    }
   };
 
   return (
