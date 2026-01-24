@@ -49,7 +49,6 @@ export const Sidebar = () => {
       const errorMessage =
         err instanceof Error ? err.message : "Unkown error occurred";
       console.error("Create list failed: ", errorMessage);
-      alert(`Failed to create list: ${errorMessage}`);
     }
   };
 
@@ -64,9 +63,6 @@ export const Sidebar = () => {
         throw new Error(errorData.error || `HTTP ${response.status}`);
       }
 
-      const successData = await response.json();
-      console.log("delete success: ", successData.message);
-
       const updatedToDoLists = lists.filter(
         (toDoList: { id: string }) => toDoList.id !== id,
       );
@@ -77,7 +73,6 @@ export const Sidebar = () => {
       const errorMessage =
         err instanceof Error ? err.message : "Unkown error occurred";
       console.error("Delete list failed: ", errorMessage);
-      alert(`Failed to delete list: ${errorMessage}`);
     }
   };
 

@@ -48,64 +48,107 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
     from: undefined,
     to: undefined,
   });
+  const [filteredToDos, setFilteredToDos] = useState<ToDoState[]>();
 
   const isSmallScreen = useIsMobile();
 
   const { selectedList } = useContext(SelectListContext);
 
   const onSubmit: SubmitHandler<ToDoFormInput> = async (data) => {
-    const newId = uuidv4();
+    try {
+      const newId = uuidv4();
 
-    const newToDo = {
-      id: newId,
-      list: selectedList.id,
-      toDoName: data.toDoName,
-      notes: data.notes,
-      date: data.date,
-      time: data.time,
-      isChecked: false,
-      priority: data.priority,
-      dateCreated: new Date(),
-    };
+      const newToDo = {
+        id: newId,
+        list: selectedList.id,
+        toDoName: data.toDoName,
+        notes: data.notes,
+        date: new Date(data.date),
+        time: data.time,
+        isChecked: false,
+        priority: data.priority,
+        dateCreated: new Date(),
+      };
 
-    const usersToDos =
-      JSON.parse(localStorage.getItem("toDoData") ?? "[]") || [];
+      const response = await fetch("/api/toDos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newToDo),
+      });
 
-    const updatedToDos = [newToDo, ...usersToDos];
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
 
-    localStorage.setItem("toDoData", JSON.stringify(updatedToDos));
-    setToDos(updatedToDos);
-    setIsDialogOpen(false);
-    setIsSubmitSuccessful(true);
+      setToDos([...toDos, newToDo]);
+      setIsDialogOpen(false);
+      setIsSubmitSuccessful(true);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Unkown error occurred";
+      console.error("Create To-Do failed: ", errorMessage);
+    }
   };
 
-  const checkToDo = (toDoId: string) => {
-    const updatedToDos = toDos.map((toDo) =>
-      toDo.id === toDoId ? { ...toDo, isChecked: !toDo.isChecked } : toDo
-    );
+  const checkToDo = async (toDoId: string, isChecked: boolean) => {
+    try {
+      const response = await fetch(`/api/toDos/${toDoId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isChecked: isChecked }),
+      });
 
-    localStorage.setItem("toDoData", JSON.stringify(updatedToDos));
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
 
-    setToDos(updatedToDos);
-  };
-
-  const deleteToDo = (toDoId: string) => {
-    const updatedToDos = toDos.filter((toDo) => toDo.id !== toDoId);
-    localStorage.setItem("toDoData", JSON.stringify(updatedToDos));
-
-    setToDos(updatedToDos);
-  };
-
-  const priorityFilter = (priority: string) => {
-    const storedToDos = JSON.parse(localStorage.getItem("toDoData") ?? "[]");
-    if (priority === "all") {
-      setToDos(storedToDos);
-    } else {
-      const updatedToDos = storedToDos.filter(
-        (item: ToDoState) => item.priority === priority
+      const updatedToDos = toDos.map((toDo) =>
+        toDo.id === toDoId ? { ...toDo, isChecked: !toDo.isChecked } : toDo,
       );
 
       setToDos(updatedToDos);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Unkown error occurred";
+      console.error("PUT failed: ", errorMessage);
+    }
+  };
+
+  const deleteToDo = async (toDoId: string) => {
+    try {
+      const response = await fetch(`/api/toDos/${toDoId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
+
+      const updatedToDos = toDos.filter((toDo) => toDo.id !== toDoId);
+      setToDos(updatedToDos);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Unkown error occurred";
+      console.error("Delete todo failed: ", errorMessage);
+    }
+  };
+
+  const priorityFilter = (priority: string) => {
+    if (priority === "all") {
+      setFilteredToDos(toDos);
+    } else {
+      const updatedToDos = toDos.filter(
+        (item: ToDoState) => item.priority === priority,
+      );
+
+      setFilteredToDos(updatedToDos);
     }
   };
 
@@ -113,29 +156,31 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
     if (dateRange?.from && dateRange?.to) {
       const fromDate = new Date(dateRange?.from as Date);
       const toDate = new Date(dateRange?.to as Date);
-      const storedToDos = JSON.parse(localStorage.getItem("toDoData") ?? "[]");
-      const updatedToDos = storedToDos.filter((item: ToDoState) => {
+      const updatedToDos = toDos.filter((item: ToDoState) => {
         const toDoDate = new Date(item.date);
 
         return toDoDate >= fromDate && toDoDate <= toDate;
       });
       if (updatedToDos !== toDos) {
-        setToDos(updatedToDos);
+        setFilteredToDos(updatedToDos);
       }
     }
   };
 
   const statusFilter = (status: boolean) => {
-    const storedToDos = JSON.parse(localStorage.getItem("toDoData") ?? "[]");
-    const updatedToDos = storedToDos.filter(
-      (item: ToDoState) => item.isChecked === status
+    const updatedToDos = toDos.filter(
+      (item: ToDoState) => item.isChecked === status,
     );
-    setToDos(updatedToDos);
+    setFilteredToDos(updatedToDos);
   };
 
   useEffect(() => {
     dateFilter();
   }, [dateRange]);
+
+  useEffect(() => {
+    setFilteredToDos(toDos);
+  }, [toDos]);
 
   return (
     <>
@@ -238,16 +283,18 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
       ) : null}
 
       <div className="flex flex-col gap-2 mt-2 p-2 overflow-scroll h-[calc(100%-130px)]">
-        {toDos
-          .filter((toDo) => toDo.list === selectedList?.id)
-          .map((toDo, index) => (
-            <ToDoItem
-              key={index}
-              data={toDo}
-              checkToDo={checkToDo}
-              deleteToDo={deleteToDo}
-            />
-          ))}
+        {(() => {
+          if (filteredToDos) {
+            return filteredToDos.map((toDo, index) => (
+              <ToDoItem
+                key={index}
+                data={toDo}
+                checkToDo={checkToDo}
+                deleteToDo={deleteToDo}
+              />
+            ));
+          }
+        })()}
       </div>
     </>
   );

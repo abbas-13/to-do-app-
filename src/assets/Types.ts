@@ -6,10 +6,11 @@ export interface ToDoState {
   isChecked: boolean;
   list: string;
   toDoName: string;
-  date: string;
+  date: Date;
   notes: string;
   time: string;
   priority: string;
+  dateCreated: Date;
 }
 
 export interface SelectedListState {
@@ -56,7 +57,7 @@ export interface ToDoFormProps {
 
 export interface ToDoItemProps {
   data: ToDoState;
-  checkToDo: (id: string) => void;
+  checkToDo: (id: string, isChecked: boolean) => void;
   deleteToDo: (id: string) => void;
 }
 

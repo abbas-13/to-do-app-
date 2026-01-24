@@ -19,24 +19,36 @@ const App = () => {
     name: "",
   });
 
+  const fetchToDos = async (id: string) => {
+    const responseToDos = await fetch(`/api/toDos/${id}`, {
+      method: "GET",
+    });
+
+    const toDos = await responseToDos.json();
+    const sortedToDos = toDos.sort(
+      (a: ToDoState, b: ToDoState) =>
+        new Date(a.date).valueOf() - new Date(b.date).valueOf(),
+    );
+
+    setToDos(sortedToDos);
+  };
+
   const selectList = (id: string, name?: string) => {
     setSelectedList({ id, name: name ? name : "" });
+    fetchToDos(id);
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const storedToDos = JSON.parse(localStorage.getItem("toDoData") ?? "[]");
-      const updatedToDos = storedToDos.sort(
-        (a: ToDoState, b: ToDoState) =>
-          new Date(b.date).valueOf() - new Date(a.date).valueOf(),
-      );
-      setToDos(updatedToDos);
+    const fetchToDoLists = async () => {
+      const responseLists = await fetch(`/api/lists`, {
+        method: "GET",
+      });
 
-      const response = await fetch(`/api/lists`);
-      const storedLists = await response.json();
-      setLists(storedLists);
+      const toDoLists = await responseLists.json();
+      setLists(toDoLists);
     };
-    fetchData();
+
+    fetchToDoLists();
   }, []);
 
   return (

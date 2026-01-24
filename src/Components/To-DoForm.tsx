@@ -81,6 +81,7 @@ export const ToDoForm = ({
                 type="text"
                 name="toDoName"
                 placeholder="To do name"
+                className="text-xs md:text-sm"
               />
               <ErrorMessage
                 errors={errors}
@@ -108,7 +109,7 @@ export const ToDoForm = ({
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="text-xs md:text-sm">
                         <SelectValue placeholder="Select a priority" />
                       </SelectTrigger>
                       <SelectContent>
@@ -143,19 +144,10 @@ export const ToDoForm = ({
             <label className="text-xs font-semibold md:text-sm">Notes:</label>
             <div>
               <Textarea
-                {...register("notes", {
-                  required: "Please enter notes description",
-                })}
+                placeholder="Notes description"
+                {...register("notes")}
                 name="notes"
-              />
-              <ErrorMessage
-                errors={errors}
-                name="notes"
-                render={({ message }) => (
-                  <p className="text-xs text-red-500 mt-1 text-center">
-                    {message}
-                  </p>
-                )}
+                className="text-xs md:text-sm"
               />
             </div>
           </div>
@@ -170,7 +162,7 @@ export const ToDoForm = ({
                   type="date"
                   name="date"
                   id="finish by"
-                  className="text-xs md:text-sm"
+                  className="text-xs md:text-sm flex-1"
                 />
                 <ErrorMessage
                   errors={errors}
@@ -190,7 +182,7 @@ export const ToDoForm = ({
                   type="time"
                   name="time"
                   id="finish by"
-                  className="text-xs md:text-sm pl-2 pr-0 md:py-1 md:px-3"
+                  className="text-xs md:text-sm pl-2 pr-1 md:py-1 md:px-3 flex-1"
                   min={formattedDate}
                 />
                 <ErrorMessage
