@@ -26,11 +26,11 @@ const App = () => {
       });
 
       if (!response.ok) {
-        console.error("Error fetching To Dos: ", response);
+        throw new Error("Error fetching To Dos: ", await response.json());
       }
 
-      const toDos = await response.json();
-      const sortedToDos = toDos.sort(
+      const toDoData = await response.json();
+      const sortedToDos = toDoData.sort(
         (a: ToDoState, b: ToDoState) =>
           new Date(a.date).valueOf() - new Date(b.date).valueOf(),
       );
