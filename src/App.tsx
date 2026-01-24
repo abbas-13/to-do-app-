@@ -20,17 +20,27 @@ const App = () => {
   });
 
   const fetchToDos = async (id: string) => {
-    const responseToDos = await fetch(`/api/toDos/${id}`, {
-      method: "GET",
-    });
+    try {
+      const response = await fetch(`/api/toDos/${id}`, {
+        method: "GET",
+      });
 
-    const toDos = await responseToDos.json();
-    const sortedToDos = toDos.sort(
-      (a: ToDoState, b: ToDoState) =>
-        new Date(a.date).valueOf() - new Date(b.date).valueOf(),
-    );
+      if (!response.ok) {
+        console.error("Error fetching To Dos: ", response);
+      }
 
-    setToDos(sortedToDos);
+      const toDos = await response.json();
+      const sortedToDos = toDos.sort(
+        (a: ToDoState, b: ToDoState) =>
+          new Date(a.date).valueOf() - new Date(b.date).valueOf(),
+      );
+
+      setToDos(sortedToDos);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Unkown error occurred";
+      console.error("Fetching To Dos failed: ", errorMessage);
+    }
   };
 
   const selectList = (id: string, name?: string) => {
@@ -40,12 +50,22 @@ const App = () => {
 
   useEffect(() => {
     const fetchToDoLists = async () => {
-      const responseLists = await fetch(`/api/lists`, {
-        method: "GET",
-      });
+      try {
+        const response = await fetch(`/api/lists`, {
+          method: "GET",
+        });
 
-      const toDoLists = await responseLists.json();
-      setLists(toDoLists);
+        if (!response.ok) {
+          throw new Error(await response.json());
+        }
+
+        const toDoLists = await response.json();
+        setLists(toDoLists);
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Unkown error occurred";
+        console.error("Error while fetching lists: ", errorMessage);
+      }
     };
 
     fetchToDoLists();
