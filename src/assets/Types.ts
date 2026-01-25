@@ -2,7 +2,7 @@ import type { Dispatch, SetStateAction } from "react";
 import type { SubmitHandler } from "react-hook-form";
 
 export interface ToDoState {
-  id: string;
+  _id: string;
   isChecked: boolean;
   list: string;
   toDoName: string;
@@ -26,6 +26,11 @@ export interface ListsStateType {
 export interface ListsContextType {
   lists: ListsStateType[];
   setLists: Dispatch<SetStateAction<ListsStateType[]>>;
+}
+
+export interface ResponseListType {
+  _id: string;
+  name: string;
 }
 
 export interface SelectListContextType {

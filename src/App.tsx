@@ -5,6 +5,7 @@ import { SelectListContext } from "./Context/SelectListContext";
 import { ListsContext } from "./Context/ListsContext";
 import type {
   ListsStateType,
+  ResponseListType,
   SelectedListState,
   ToDoState,
 } from "./assets/Types";
@@ -60,7 +61,11 @@ const App = () => {
         }
 
         const toDoLists = await response.json();
-        setLists(toDoLists);
+        setLists(
+          toDoLists.map((item: ResponseListType) => {
+            return { id: item._id, name: item.name };
+          }),
+        );
       } catch (err) {
         const errorMessage =
           err instanceof Error ? err.message : "Unkown error occurred";

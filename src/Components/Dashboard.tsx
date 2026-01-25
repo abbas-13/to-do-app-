@@ -6,7 +6,6 @@ import {
   type SetStateAction,
 } from "react";
 import type { SubmitHandler } from "react-hook-form";
-import { v4 as uuidv4 } from "uuid";
 import {
   CircleArrowDown,
   CircleArrowUp,
@@ -56,10 +55,7 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
 
   const onSubmit: SubmitHandler<ToDoFormInput> = async (data) => {
     try {
-      const newId = uuidv4();
-
       const newToDo = {
-        id: newId,
         list: selectedList.id,
         toDoName: data.toDoName,
         notes: data.notes,
@@ -83,7 +79,9 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
         throw new Error(errorData.error || `HTTP ${response.status}`);
       }
 
-      setToDos([...toDos, newToDo]);
+      const { body } = await response.json();
+
+      setToDos([...toDos, body]);
       setIsDialogOpen(false);
       setIsSubmitSuccessful(true);
     } catch (err) {
@@ -109,7 +107,7 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
       }
 
       const updatedToDos = toDos.map((toDo) =>
-        toDo.id === toDoId ? { ...toDo, isChecked: !toDo.isChecked } : toDo,
+        toDo._id === toDoId ? { ...toDo, isChecked: !toDo.isChecked } : toDo,
       );
 
       setToDos(updatedToDos);
@@ -131,7 +129,7 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
         throw new Error(errorData.error || `HTTP ${response.status}`);
       }
 
-      const updatedToDos = toDos.filter((toDo) => toDo.id !== toDoId);
+      const updatedToDos = toDos.filter((toDo) => toDo._id !== toDoId);
       setToDos(updatedToDos);
     } catch (err) {
       const errorMessage =

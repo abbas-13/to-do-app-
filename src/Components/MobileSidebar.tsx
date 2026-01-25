@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { Menu, Plus } from "lucide-react";
 import { Button } from "@/Components/ui/button";
 import { Sidebar, SidebarContent, useSidebar } from "./ui/sidebar";
@@ -18,31 +17,79 @@ export const MobileSidebar = () => {
   const { selectList, setSelectedList } = useContext(SelectListContext);
   const { toggleSidebar } = useSidebar();
 
-  const addList = () => {
-    const newId = uuidv4();
-    const newList = { id: newId, name: "" };
+  const addList = async () => {
+    try {
+      const response = await fetch("/api/lists", {
+        method: "POST",
+      });
 
-    setLists((prevLists: ListsStateType[]) => [newList, ...prevLists]);
-    selectList(newId, "");
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error(errorData.error || `HTTP ${response.status}`);
+      }
+
+      const { body } = await response.json();
+      const newList = { id: body._id, name: "" };
+
+      setLists((prevLists) => [newList, ...prevLists]);
+      selectList(body._id, "");
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Unkown error occurred";
+      console.error(errorMessage);
+    }
   };
 
-  const createList = (name: string) => {
-    const updatedToDoLists = lists.map((list) =>
-      list.name || !list.id ? list : { ...list, name }
-    );
+  const createList = async (name: string): Promise<void> => {
+    try {
+      const updatedToDoLists = lists.map((list: ListsStateType) =>
+        list.name || !list.id ? list : { ...list, name },
+      );
 
-    localStorage.setItem("toDoLists", JSON.stringify(updatedToDoLists));
-    setLists(updatedToDoLists);
-    setSelectedList(updatedToDoLists[0]);
+      const response = await fetch(`/api/lists/${updatedToDoLists[0].id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
+
+      setLists(updatedToDoLists);
+      setSelectedList(updatedToDoLists[0]);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Unkown error occurred";
+      console.error("Create list failed: ", errorMessage);
+    }
   };
 
-  const deleteList = (id: string) => {
-    const updatedToDoLists = lists.filter(
-      (toDoList: SelectedListState) => toDoList.id !== id
-    );
-    localStorage.setItem("toDoLists", JSON.stringify(updatedToDoLists));
-    setLists(updatedToDoLists);
-    selectList("", "");
+  const deleteList = async (id: string): Promise<void> => {
+    try {
+      const response = await fetch(`/api/lists/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
+
+      const updatedToDoLists = lists.filter(
+        (toDoList: { id: string }) => toDoList.id !== id,
+      );
+
+      setLists(updatedToDoLists);
+      selectList("", "");
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Unkown error occurred";
+      console.error("Delete list failed: ", errorMessage);
+    }
   };
 
   return (

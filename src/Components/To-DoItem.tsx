@@ -35,7 +35,7 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }: ToDoItemProps) => {
                 className="data-[state=checked]:border-2 data-[state=checked]:border-white data-[state=checked]:outline-1 rounded-[8px] data-[state=checked]:bg-[#2097f3] data-[state=checked]:text-transparent dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
                 checked={data.isChecked}
                 onCheckedChange={(checked: boolean) =>
-                  checkToDo(data.id, checked)
+                  checkToDo(data._id, checked)
                 }
               />
 
@@ -84,7 +84,7 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }: ToDoItemProps) => {
                     <MenubarItem
                       className="flex justify-between"
                       onClick={() => {
-                        deleteToDo(data.id);
+                        deleteToDo(data._id);
                       }}
                     >
                       Delete

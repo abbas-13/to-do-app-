@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 import { ToDoList } from "./To-DoList";
 import { SearchBar } from "./SearchBar";
@@ -16,12 +15,27 @@ export const Sidebar = () => {
   const { lists, setLists } = useContext(ListsContext);
   const { selectList, setSelectedList } = useContext(SelectListContext);
 
-  const addList = () => {
-    const newId = uuidv4();
-    const newList = { id: newId, name: "" };
+  const addList = async () => {
+    try {
+      const response = await fetch("/api/lists", {
+        method: "POST",
+      });
 
-    setLists((prevLists) => [newList, ...prevLists]);
-    selectList(newId, "");
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error(errorData.error || `HTTP ${response.status}`);
+      }
+
+      const { body } = await response.json();
+      const newList = { id: body._id, name: "" };
+
+      setLists((prevLists) => [newList, ...prevLists]);
+      selectList(body._id, "");
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Unkown error occurred";
+      console.error(errorMessage);
+    }
   };
 
   const createList = async (name: string): Promise<void> => {
@@ -30,12 +44,12 @@ export const Sidebar = () => {
         list.name || !list.id ? list : { ...list, name },
       );
 
-      const response = await fetch(`/api/lists`, {
-        method: "POST",
+      const response = await fetch(`/api/lists/${updatedToDoLists[0].id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(updatedToDoLists[0]),
+        body: JSON.stringify({ name }),
       });
 
       if (!response.ok) {
