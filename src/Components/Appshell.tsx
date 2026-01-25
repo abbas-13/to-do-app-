@@ -2,8 +2,7 @@ import { useState } from "react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { SidebarProvider } from "./ui/sidebar";
-import { MobileSidebar } from "./MobileSidebar";
-import { Sidebar } from "./Sidebar";
+import { CustomSidebar } from "./Sidebar";
 import Navbar from "./Navbar";
 import styles from "./Appshell.module.css";
 
@@ -17,32 +16,17 @@ export const Appshell = ({ children }: AppShellProps) => {
 
   return (
     <>
-      {!isSmallScreen ? (
-        <>
-          <Navbar />
-          <div className={styles["appshell-md"]}>
-            <SidebarProvider
-              className="h-full min-h-full"
-              open={open}
-              onOpenChange={setOpen}
-            >
-              <Sidebar />
-              <main className={styles["children-container"]}>{children}</main>
-            </SidebarProvider>
-          </div>
-        </>
-      ) : (
-        <div className="h-screen flex">
-          <div className="bg-[#F5FAFE] pt-6 pl-4">
-            <SidebarProvider open={open} onOpenChange={setOpen}>
-              <MobileSidebar />
-            </SidebarProvider>
-          </div>
-          <main className={styles["mobile-children-container"]}>
-            {children}
-          </main>
-        </div>
-      )}
+      {!isSmallScreen && <Navbar />}
+      <div className={styles["appshell"]}>
+        <SidebarProvider
+          className="h-full min-h-full"
+          open={open}
+          onOpenChange={setOpen}
+        >
+          <CustomSidebar />
+          <main className={styles["children-container"]}>{children}</main>
+        </SidebarProvider>
+      </div>
     </>
   );
 };

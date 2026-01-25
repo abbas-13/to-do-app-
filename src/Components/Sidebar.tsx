@@ -1,19 +1,23 @@
 import { useContext, useState } from "react";
+import { Menu, Plus } from "lucide-react";
+import { Sidebar, SidebarContent, useSidebar } from "./ui/sidebar";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/Components/ui/button";
 
 import { ToDoList } from "./To-DoList";
 import { SearchBar } from "./SearchBar";
 import { ListsContext } from "../Context/ListsContext";
 import { SelectListContext } from "../Context/SelectListContext";
 import type { ListsStateType } from "../assets/Types";
-import { Plus } from "lucide-react";
-import { Button } from "@/Components/ui/button";
 
-export const Sidebar = () => {
+export const CustomSidebar = () => {
   const [input, setInput] = useState("");
   const [searchResults, setSearchResults] = useState<ListsStateType[]>([]);
 
   const { lists, setLists } = useContext(ListsContext);
   const { selectList, setSelectedList } = useContext(SelectListContext);
+  const { toggleSidebar } = useSidebar();
+  const isMobile = useIsMobile();
 
   const addList = async () => {
     try {
@@ -90,41 +94,64 @@ export const Sidebar = () => {
     }
   };
 
+  const sideBarContent = () => {
+    return (
+      <>
+        <SearchBar
+          setSearchResult={setSearchResults}
+          lists={lists}
+          input={input}
+          setInput={setInput}
+        />
+        <div className="flex my-4 items-center justify-center w-full">
+          <Button
+            className="bg-[#2097f3] hover:bg-[#FFFFFF] hover:border-2 hover:border-[#2097f3] active:bg-[#2097f3] active:text-white hover:text-black active:outline-2 active:outline-[#85C7F8] hover:shadow-lg active:shadow-none active:border-1 active:border-white text-white"
+            variant="outline"
+            onClick={addList}
+          >
+            Create List
+            <Plus strokeWidth={3} />
+          </Button>
+        </div>
+        {input?.length
+          ? searchResults?.map((item: { id: string; name: string }) => (
+              <ToDoList
+                key={item.id}
+                list={item}
+                createList={createList}
+                deleteList={deleteList}
+              />
+            ))
+          : lists?.map((list: ListsStateType) => (
+              <ToDoList
+                key={list.id}
+                list={list}
+                createList={createList}
+                deleteList={deleteList}
+              />
+            ))}
+      </>
+    );
+  };
+
   return (
-    <div className="p-2 w-52 bg-[#FAFBFF] border-r-2 border-r-grey-400">
-      <SearchBar
-        setSearchResult={setSearchResults}
-        lists={lists}
-        input={input}
-        setInput={setInput}
-      />
-      <div className="flex my-4 items-center justify-center w-full">
-        <Button
-          className="bg-[#2097f3] hover:bg-[#FFFFFF] hover:border-2 hover:border-[#2097f3] active:bg-[#2097f3] active:text-white hover:text-black active:outline-2 active:outline-[#85C7F8] hover:shadow-lg active:shadow-none active:border-1 active:border-white text-white"
-          variant="outline"
-          onClick={addList}
-        >
-          Create List
-          <Plus strokeWidth={3} />
-        </Button>
-      </div>
-      {input?.length
-        ? searchResults?.map((item: { id: string; name: string }) => (
-            <ToDoList
-              key={item.id}
-              list={item}
-              createList={createList}
-              deleteList={deleteList}
-            />
-          ))
-        : lists?.map((list: ListsStateType) => (
-            <ToDoList
-              key={list.id}
-              list={list}
-              createList={createList}
-              deleteList={deleteList}
-            />
-          ))}
-    </div>
+    <>
+      {isMobile ? (
+        <div className="h-screen flex">
+          <div className="pt-6 pl-4 bg-[#F5FAFE]">
+            <Sidebar>
+              <SidebarContent className="gap-0 w-[230px]!">
+                {sideBarContent()}
+              </SidebarContent>
+            </Sidebar>
+            <Menu onClick={toggleSidebar} />
+          </div>
+        </div>
+      ) : (
+        <div className="p-2 w-52 bg-[#FAFBFF] border-r-2 border-r-grey-400">
+          {sideBarContent()}
+        </div>
+      )}
+    </>
   );
 };
