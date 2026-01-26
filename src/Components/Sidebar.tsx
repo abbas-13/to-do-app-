@@ -21,9 +21,12 @@ export const CustomSidebar = () => {
 
   const addList = async () => {
     try {
-      const response = await fetch("/api/lists", {
-        method: "POST",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/lists`,
+        {
+          method: "POST",
+        },
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -43,13 +46,16 @@ export const CustomSidebar = () => {
 
   const createList = async (name: string, id: string): Promise<void> => {
     try {
-      const response = await fetch(`/api/lists/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/lists/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name }),
         },
-        body: JSON.stringify({ name }),
-      });
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -71,9 +77,12 @@ export const CustomSidebar = () => {
 
   const deleteList = async (id: string): Promise<void> => {
     try {
-      const response = await fetch(`/api/lists/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/lists/${id}`,
+        {
+          method: "DELETE",
+        },
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
