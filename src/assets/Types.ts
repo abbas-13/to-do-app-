@@ -2,23 +2,19 @@ import type { Dispatch, SetStateAction } from "react";
 import type { SubmitHandler } from "react-hook-form";
 
 export interface ToDoState {
-  id: string;
+  _id: string;
   isChecked: boolean;
   list: string;
   toDoName: string;
-  date: string;
+  date: Date;
   notes: string;
   time: string;
   priority: string;
-}
-
-export interface SelectedListState {
-  id: string;
-  name: string;
+  dateCreated: Date;
 }
 
 export interface ListsStateType {
-  id: string;
+  _id: string;
   name: string;
 }
 
@@ -29,8 +25,8 @@ export interface ListsContextType {
 
 export interface SelectListContextType {
   selectList: (id: string, name: string) => void;
-  selectedList: SelectedListState;
-  setSelectedList: Dispatch<SetStateAction<SelectedListState>>;
+  selectedList: ListsStateType;
+  setSelectedList: Dispatch<SetStateAction<ListsStateType>>;
 }
 
 export interface ToDoFormInput {
@@ -56,15 +52,12 @@ export interface ToDoFormProps {
 
 export interface ToDoItemProps {
   data: ToDoState;
-  checkToDo: (id: string) => void;
+  checkToDo: (id: string, isChecked: boolean) => void;
   deleteToDo: (id: string) => void;
 }
 
 export interface ToDoListProps {
-  list: {
-    id: string;
-    name: string;
-  };
+  list: ListsStateType;
   deleteList: (arg0: string) => void;
-  createList: (arg0: string) => void;
+  createList: (arg0: string, arg1: string) => void;
 }

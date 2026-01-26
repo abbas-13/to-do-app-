@@ -34,7 +34,9 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }: ToDoItemProps) => {
               <Checkbox
                 className="data-[state=checked]:border-2 data-[state=checked]:border-white data-[state=checked]:outline-1 rounded-[8px] data-[state=checked]:bg-[#2097f3] data-[state=checked]:text-transparent dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
                 checked={data.isChecked}
-                onCheckedChange={() => checkToDo(data.id)}
+                onCheckedChange={(checked: boolean) =>
+                  checkToDo(data._id, checked)
+                }
               />
 
               <p
@@ -56,13 +58,14 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }: ToDoItemProps) => {
               {data.notes}
             </p>
           </div>
-          <div className="flex flex-col gap-1 min-w-">
+          <div className="flex flex-col gap-1 pr-2">
             <label
               className={`ml-2 text-xs sm:text-xs flex items-center gap-2 ${
                 data.isChecked && "text-[#A9A9A9]"
               }`}
             >
-              <CalendarDays size={12} /> {data.date}
+              <CalendarDays size={12} />
+              {new Date(data.date).toISOString().substring(0, 10)}
             </label>
             <label
               className={`ml-2 text-xs sm:text-xs flex items-center gap-2 ${
@@ -78,13 +81,14 @@ export const ToDoItem = ({ data, checkToDo, deleteToDo }: ToDoItemProps) => {
                     <EllipsisVertical size={14} />
                   </MenubarTrigger>
                   <MenubarContent align="end" className={styles.MenubarContent}>
-                    <MenubarItem className="flex justify-between">
+                    <MenubarItem
+                      className="flex justify-between"
+                      onClick={() => {
+                        deleteToDo(data._id);
+                      }}
+                    >
                       Delete
-                      <Trash
-                        onClick={() => deleteToDo(data.id)}
-                        size={18}
-                        color="red"
-                      />
+                      <Trash size={18} color="red" />
                     </MenubarItem>
                   </MenubarContent>
                 </MenubarMenu>

@@ -3,34 +3,72 @@ import { useEffect, useState } from "react";
 import { Appshell } from "./Components/Appshell";
 import { SelectListContext } from "./Context/SelectListContext";
 import { ListsContext } from "./Context/ListsContext";
-import type {
-  ListsStateType,
-  SelectedListState,
-  ToDoState,
-} from "./assets/Types";
+import type { ListsStateType, ToDoState } from "./assets/Types";
 import "./App.css";
 import Dashboard from "./Components/Dashboard";
 
 const App = () => {
   const [toDos, setToDos] = useState<ToDoState[]>([]);
   const [lists, setLists] = useState<ListsStateType[]>([]);
-  const [selectedList, setSelectedList] = useState<SelectedListState>({
-    id: "",
+  const [selectedList, setSelectedList] = useState<ListsStateType>({
+    _id: "",
     name: "",
   });
 
+  const fetchToDos = async (id: string) => {
+    try {
+      const response = await fetch(`/api/toDos/${id}`, {
+        method: "GET",
+      });
+
+      if (!response.ok) {
+        throw new Error("Error fetching To Dos: ", await response.json());
+      }
+
+      const toDoData = await response.json();
+      const sortedToDos = toDoData.sort(
+        (a: ToDoState, b: ToDoState) =>
+          new Date(a.date).valueOf() - new Date(b.date).valueOf(),
+      );
+
+      setToDos(sortedToDos);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Unkown error occurred";
+      console.error("Fetching To Dos failed: ", errorMessage);
+    }
+  };
+
   const selectList = (id: string, name?: string) => {
-    setSelectedList({ id, name: name ? name : "" });
+    setSelectedList({ _id: id, name: name ? name : "" });
+    fetchToDos(id);
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const storedToDos = JSON.parse(localStorage.getItem("toDoData") ?? "[]");
-      setToDos(storedToDos);
-      const storedLists = JSON.parse(localStorage.getItem("toDoLists") ?? "[]");
-      setLists(storedLists);
+    const fetchToDoLists = async () => {
+      try {
+        const response = await fetch(`/api/lists`, {
+          method: "GET",
+        });
+
+        if (!response.ok) {
+          throw new Error(await response.json());
+        }
+
+        const toDoLists = await response.json();
+        setLists(
+          toDoLists.map((item: ListsStateType) => {
+            return { id: item._id, name: item.name };
+          }),
+        );
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Unkown error occurred";
+        console.error("Error while fetching lists: ", errorMessage);
+      }
     };
-    fetchData();
+
+    fetchToDoLists();
   }, []);
 
   return (
