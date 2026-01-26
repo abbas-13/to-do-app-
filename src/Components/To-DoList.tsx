@@ -23,14 +23,16 @@ export const ToDoList = ({ list, deleteList, createList }: ToDoListProps) => {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          createList(inputValue);
+          createList(inputValue, list._id);
         }}
         className="flex max-w-fit gap-1 m-2 items-center"
       >
         <div
           className="w-6/7 p-2 focus-within:border-b-1 focus-within:border-b-[#2097F3] cursor-pointer"
           onClick={() => {
-            selectList(list.id, list?.name);
+            if (list?.name) {
+              selectList(list._id, list?.name);
+            }
             if (isMobile && list?.name) {
               toggleSidebar();
             }
@@ -50,7 +52,7 @@ export const ToDoList = ({ list, deleteList, createList }: ToDoListProps) => {
         <X
           onClick={(event) => {
             event.stopPropagation();
-            deleteList(list.id);
+            deleteList(list._id);
           }}
           color="red"
           strokeWidth={4}

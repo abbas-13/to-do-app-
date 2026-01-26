@@ -56,7 +56,7 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
   const onSubmit: SubmitHandler<ToDoFormInput> = async (data) => {
     try {
       const newToDo = {
-        list: selectedList.id,
+        list: selectedList._id,
         toDoName: data.toDoName,
         notes: data.notes,
         date: new Date(data.date),

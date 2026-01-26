@@ -31,9 +31,8 @@ export const CustomSidebar = () => {
       }
 
       const { body } = await response.json();
-      const newList = { id: body._id, name: "" };
 
-      setLists((prevLists) => [newList, ...prevLists]);
+      setLists([{ _id: body._id, name: "" }, ...lists]);
       selectList(body._id, "");
     } catch (err) {
       const errorMessage =
@@ -42,13 +41,9 @@ export const CustomSidebar = () => {
     }
   };
 
-  const createList = async (name: string): Promise<void> => {
+  const createList = async (name: string, id: string): Promise<void> => {
     try {
-      const updatedToDoLists = lists.map((list: ListsStateType) =>
-        list.name || !list.id ? list : { ...list, name },
-      );
-
-      const response = await fetch(`/api/lists/${updatedToDoLists[0].id}`, {
+      const response = await fetch(`/api/lists/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -61,8 +56,12 @@ export const CustomSidebar = () => {
         throw new Error(errorData.error || `HTTP ${response.status}`);
       }
 
-      setLists(updatedToDoLists);
-      setSelectedList(updatedToDoLists[0]);
+      const updatedLists = lists.map((list) =>
+        list._id === id ? { ...list, name } : list,
+      );
+
+      setLists(updatedLists);
+      setSelectedList(updatedLists[0]);
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "Unkown error occurred";
@@ -81,9 +80,7 @@ export const CustomSidebar = () => {
         throw new Error(errorData.error || `HTTP ${response.status}`);
       }
 
-      const updatedToDoLists = lists.filter(
-        (toDoList: { id: string }) => toDoList.id !== id,
-      );
+      const updatedToDoLists = lists.filter((toDoList) => toDoList._id !== id);
 
       setLists(updatedToDoLists);
       selectList("", "");
@@ -114,9 +111,9 @@ export const CustomSidebar = () => {
           </Button>
         </div>
         {input?.length
-          ? searchResults?.map((item: { id: string; name: string }) => (
+          ? searchResults?.map((item) => (
               <ToDoList
-                key={item.id}
+                key={item._id}
                 list={item}
                 createList={createList}
                 deleteList={deleteList}
@@ -124,7 +121,7 @@ export const CustomSidebar = () => {
             ))
           : lists?.map((list: ListsStateType) => (
               <ToDoList
-                key={list.id}
+                key={list._id}
                 list={list}
                 createList={createList}
                 deleteList={deleteList}

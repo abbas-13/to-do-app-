@@ -13,13 +13,8 @@ export interface ToDoState {
   dateCreated: Date;
 }
 
-export interface SelectedListState {
-  id: string;
-  name: string;
-}
-
 export interface ListsStateType {
-  id: string;
+  _id: string;
   name: string;
 }
 
@@ -28,15 +23,10 @@ export interface ListsContextType {
   setLists: Dispatch<SetStateAction<ListsStateType[]>>;
 }
 
-export interface ResponseListType {
-  _id: string;
-  name: string;
-}
-
 export interface SelectListContextType {
   selectList: (id: string, name: string) => void;
-  selectedList: SelectedListState;
-  setSelectedList: Dispatch<SetStateAction<SelectedListState>>;
+  selectedList: ListsStateType;
+  setSelectedList: Dispatch<SetStateAction<ListsStateType>>;
 }
 
 export interface ToDoFormInput {
@@ -67,10 +57,7 @@ export interface ToDoItemProps {
 }
 
 export interface ToDoListProps {
-  list: {
-    id: string;
-    name: string;
-  };
+  list: ListsStateType;
   deleteList: (arg0: string) => void;
-  createList: (arg0: string) => void;
+  createList: (arg0: string, arg1: string) => void;
 }

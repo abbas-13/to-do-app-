@@ -3,20 +3,15 @@ import { useEffect, useState } from "react";
 import { Appshell } from "./Components/Appshell";
 import { SelectListContext } from "./Context/SelectListContext";
 import { ListsContext } from "./Context/ListsContext";
-import type {
-  ListsStateType,
-  ResponseListType,
-  SelectedListState,
-  ToDoState,
-} from "./assets/Types";
+import type { ListsStateType, ToDoState } from "./assets/Types";
 import "./App.css";
 import Dashboard from "./Components/Dashboard";
 
 const App = () => {
   const [toDos, setToDos] = useState<ToDoState[]>([]);
   const [lists, setLists] = useState<ListsStateType[]>([]);
-  const [selectedList, setSelectedList] = useState<SelectedListState>({
-    id: "",
+  const [selectedList, setSelectedList] = useState<ListsStateType>({
+    _id: "",
     name: "",
   });
 
@@ -45,7 +40,7 @@ const App = () => {
   };
 
   const selectList = (id: string, name?: string) => {
-    setSelectedList({ id, name: name ? name : "" });
+    setSelectedList({ _id: id, name: name ? name : "" });
     fetchToDos(id);
   };
 
@@ -62,7 +57,7 @@ const App = () => {
 
         const toDoLists = await response.json();
         setLists(
-          toDoLists.map((item: ResponseListType) => {
+          toDoLists.map((item: ListsStateType) => {
             return { id: item._id, name: item.name };
           }),
         );
