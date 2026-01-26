@@ -31,6 +31,7 @@ export const ToDoList = ({ list, deleteList, createList }: ToDoListProps) => {
           className="w-6/7 p-2 focus-within:border-b-1 focus-within:border-b-[#2097F3] cursor-pointer"
           onClick={() => {
             if (list?.name) {
+              console.log("SOME CONSOLE LOG", list);
               selectList(list._id, list?.name);
             }
             if (isMobile && list?.name) {

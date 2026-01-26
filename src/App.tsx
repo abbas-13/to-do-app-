@@ -17,9 +17,12 @@ const App = () => {
 
   const fetchToDos = async (id: string) => {
     try {
-      const response = await fetch(`/api/toDos/${id}`, {
-        method: "GET",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/toDos/${id}`,
+        {
+          method: "GET",
+        },
+      );
 
       if (!response.ok) {
         throw new Error("Error fetching To Dos: ", await response.json());
@@ -40,6 +43,7 @@ const App = () => {
   };
 
   const selectList = (id: string, name?: string) => {
+    console.log(id);
     setSelectedList({ _id: id, name: name ? name : "" });
     fetchToDos(id);
   };
@@ -47,9 +51,12 @@ const App = () => {
   useEffect(() => {
     const fetchToDoLists = async () => {
       try {
-        const response = await fetch(`/api/lists`, {
-          method: "GET",
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/lists`,
+          {
+            method: "GET",
+          },
+        );
 
         if (!response.ok) {
           throw new Error(await response.json());
@@ -58,7 +65,7 @@ const App = () => {
         const toDoLists = await response.json();
         setLists(
           toDoLists.map((item: ListsStateType) => {
-            return { id: item._id, name: item.name };
+            return { _id: item._id, name: item.name };
           }),
         );
       } catch (err) {

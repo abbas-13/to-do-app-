@@ -66,13 +66,16 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
         dateCreated: new Date(),
       };
 
-      const response = await fetch("/api/toDos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/toDos`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newToDo),
         },
-        body: JSON.stringify(newToDo),
-      });
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -93,13 +96,16 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
 
   const checkToDo = async (toDoId: string, isChecked: boolean) => {
     try {
-      const response = await fetch(`/api/toDos/${toDoId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/toDos/${toDoId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ isChecked: isChecked }),
         },
-        body: JSON.stringify({ isChecked: isChecked }),
-      });
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -120,9 +126,12 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
 
   const deleteToDo = async (toDoId: string) => {
     try {
-      const response = await fetch(`/api/toDos/${toDoId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/toDos/${toDoId}`,
+        {
+          method: "DELETE",
+        },
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
