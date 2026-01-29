@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
+import { Routes, Route, useNavigate } from "react-router";
+import { toast } from "sonner";
 
-import { Appshell } from "./Components/Appshell";
-import { SelectListContext } from "./Context/SelectListContext";
-import { ListsContext } from "./Context/ListsContext";
-import type { ListsStateType, ToDoState } from "./assets/Types";
 import "./App.css";
+
 import Dashboard from "./Components/Dashboard";
+import { Appshell } from "./Components/Appshell";
+import { Toaster } from "./Components/ui/sonner";
+import Login from "./Components/Login";
+import { AuthContext } from "./Context/AuthContext";
+import { ListsContext } from "./Context/ListsContext";
+import { SelectListContext } from "./Context/SelectListContext";
+import type { ListsStateType, ToDoState, UserType } from "./assets/Types";
 
 const App = () => {
   const [toDos, setToDos] = useState<ToDoState[]>([]);
@@ -14,6 +20,13 @@ const App = () => {
     _id: "",
     name: "",
   });
+  const [user, setUser] = useState<UserType>({
+    userId: "",
+    name: "",
+    email: "",
+    displayName: "",
+  });
+  const navigate = useNavigate();
 
   const fetchToDos = async (id: string) => {
     try {
@@ -21,6 +34,7 @@ const App = () => {
         `${import.meta.env.VITE_API_URL}/api/toDos/${id}`,
         {
           method: "GET",
+          credentials: "include",
         },
       );
 
@@ -43,51 +57,110 @@ const App = () => {
   };
 
   const selectList = (id: string, name?: string) => {
-    console.log(id);
     setSelectedList({ _id: id, name: name ? name : "" });
     fetchToDos(id);
   };
 
-  useEffect(() => {
-    const fetchToDoLists = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/lists`,
-          {
-            method: "GET",
-          },
-        );
+  const fetchToDoLists = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/lists`,
+        {
+          method: "GET",
+          credentials: "include",
+        },
+      );
 
-        if (!response.ok) {
-          throw new Error(await response.json());
+      if (!response.ok) {
+        const errorData = await response.json();
+        if (response.status === 401) {
+          toast.error(errorData.error, {
+            position: "top-center",
+            action: {
+              label: "Login",
+              onClick: () => navigate("/login"),
+            },
+          });
         }
-
-        const toDoLists = await response.json();
-        setLists(
-          toDoLists.map((item: ListsStateType) => {
-            return { _id: item._id, name: item.name };
-          }),
-        );
-      } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : "Unkown error occurred";
-        console.error("Error while fetching lists: ", errorMessage);
+        throw new Error(await response.json());
       }
-    };
 
-    fetchToDoLists();
+      const toDoLists = await response.json();
+      setLists(
+        toDoLists.map((item: ListsStateType) => {
+          return { _id: item._id, name: item.name };
+        }),
+      );
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Unkown error occurred";
+      console.error("Error while fetching lists: ", errorMessage);
+    }
+  };
+
+  const fetchUser = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/current_user`,
+        {
+          method: "GET",
+          credentials: "include",
+        },
+      );
+
+      if (!response.ok) {
+        toast.error("User not logged in", {
+          position: "top-center",
+          action: {
+            label: "Login",
+            onClick: () => navigate("/login"),
+          },
+        });
+        navigate("/login");
+      }
+
+      const userData = await response.json();
+
+      setUser(userData);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Unkown error occurred";
+      console.error("An error occurred: ", errorMessage);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
   }, []);
 
   return (
-    <SelectListContext.Provider
-      value={{ selectList, selectedList, setSelectedList }}
-    >
-      <ListsContext.Provider value={{ lists, setLists }}>
-        <Appshell>
-          <Dashboard toDos={toDos} setToDos={setToDos} />
-        </Appshell>
-      </ListsContext.Provider>
-    </SelectListContext.Provider>
+    <AuthContext.Provider value={{ user, setUser }}>
+      <SelectListContext.Provider
+        value={{ selectList, selectedList, setSelectedList }}
+      >
+        <ListsContext.Provider value={{ lists, setLists }}>
+          <Toaster />
+
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Appshell>
+                  <Dashboard
+                    fetchToDoLists={fetchToDoLists}
+                    toDos={toDos}
+                    setToDos={setToDos}
+                  />
+                </Appshell>
+              }
+            />
+          </Routes>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </ListsContext.Provider>
+      </SelectListContext.Provider>
+    </AuthContext.Provider>
   );
 };
 

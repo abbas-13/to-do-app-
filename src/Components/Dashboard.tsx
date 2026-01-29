@@ -38,9 +38,10 @@ import { Calendar } from "./ui/calendar";
 interface DashboardProps {
   toDos: ToDoState[];
   setToDos: Dispatch<SetStateAction<ToDoState[]>>;
+  fetchToDoLists: () => void;
 }
 
-const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
+const Dashboard = ({ toDos, setToDos, fetchToDoLists }: DashboardProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSubmitSuccessful, setIsSubmitSuccessful] = useState<boolean>(false);
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
@@ -70,6 +71,7 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
         `${import.meta.env.VITE_API_URL}/api/toDos`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -100,6 +102,7 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
         `${import.meta.env.VITE_API_URL}/api/toDos/${toDoId}`,
         {
           method: "PUT",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -130,6 +133,7 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
         `${import.meta.env.VITE_API_URL}/api/toDos/${toDoId}`,
         {
           method: "DELETE",
+          credentials: "include",
         },
       );
 
@@ -188,6 +192,10 @@ const Dashboard = ({ toDos, setToDos }: DashboardProps) => {
   useEffect(() => {
     setFilteredToDos(toDos);
   }, [toDos]);
+
+  useEffect(() => {
+    fetchToDoLists();
+  }, []);
 
   return (
     <>

@@ -61,3 +61,15 @@ export interface ToDoListProps {
   deleteList: (arg0: string) => void;
   createList: (arg0: string, arg1: string) => void;
 }
+
+export interface UserType {
+  userId: string;
+  name: string;
+  email: string;
+  displayName: string;
+}
+
+export interface UserContextType {
+  user: UserType;
+  setUser: Dispatch<SetStateAction<UserType>>;
+}

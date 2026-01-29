@@ -13,7 +13,7 @@ export const SearchBar = ({
 
   const searchList = (query: string) => {
     const resultList = lists.filter(
-      (list) => list.name.toLowerCase() === query.toLowerCase().trim()
+      (list) => list.name.toLowerCase() === query.toLowerCase().trim(),
     );
     if (input) {
       setSearchResult(resultList);
