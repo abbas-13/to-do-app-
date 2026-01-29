@@ -9,6 +9,8 @@ import { SearchBar } from "./SearchBar";
 import { ListsContext } from "../Context/ListsContext";
 import { SelectListContext } from "../Context/SelectListContext";
 import type { ListsStateType } from "../assets/Types";
+import { toast } from "sonner";
+import { useNavigate } from "react-router";
 
 export const CustomSidebar = () => {
   const [input, setInput] = useState("");
@@ -18,6 +20,7 @@ export const CustomSidebar = () => {
   const { selectList, setSelectedList } = useContext(SelectListContext);
   const { toggleSidebar } = useSidebar();
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   const addList = async () => {
     try {
@@ -25,12 +28,21 @@ export const CustomSidebar = () => {
         `${import.meta.env.VITE_API_URL}/api/lists`,
         {
           method: "POST",
+          credentials: "include",
         },
       );
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error(errorData.error || `HTTP ${response.status}`);
+        if (response.status === 401) {
+          toast.error(errorData.error, {
+            position: "top-center",
+            action: {
+              label: "Login",
+              onClick: () => navigate("/login"),
+            },
+          });
+        }
       }
 
       const { body } = await response.json();
@@ -50,6 +62,7 @@ export const CustomSidebar = () => {
         `${import.meta.env.VITE_API_URL}/api/lists/${id}`,
         {
           method: "PUT",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -81,6 +94,7 @@ export const CustomSidebar = () => {
         `${import.meta.env.VITE_API_URL}/api/lists/${id}`,
         {
           method: "DELETE",
+          credentials: "include",
         },
       );
 
