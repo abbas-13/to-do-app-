@@ -31,6 +31,7 @@ export const SearchBar = ({
       onSubmit={handleSearch}
     >
       <Input
+        className="dark:bg-gray-200! dark:text-black! dark:placeholder:text-gray-500"
         id="outlined-basic"
         placeholder="Search"
         value={input}

@@ -202,7 +202,7 @@ const Dashboard = ({ toDos, setToDos, fetchToDoLists }: DashboardProps) => {
       <h1 className="scroll-m-20 text-left px-2 text-4xl font-semibold tracking-tight text-balance">
         Task Overview
       </h1>
-      <h3 className="scroll-m-20 text-2xl px-2 my-2 tracking-tight">
+      <h3 className="scroll-m-20 text-2xl px-2 my-2 tracking-tight text-black dark:text-white">
         {selectedList?.name || ""}
       </h3>
       <div className="border border-gray-200 m-2"></div>
@@ -215,10 +215,10 @@ const Dashboard = ({ toDos, setToDos, fetchToDoLists }: DashboardProps) => {
             isSubmitSuccessful={isSubmitSuccessful}
           />
           <div className="min-h-[100%] grid grid-cols-5 gap-[0px] md:gap-2!">
-            <div className="bg-white w-[35px] sm:w-[60px] justify-self-end h-full flex items-center justify-center rounded-md sm:px-2 border-1 ">
+            <div className="bg-white! dark:bg-[#1e3a5f]! w-[35px] sm:w-[60px] justify-self-end h-full flex items-center justify-center rounded-md sm:px-2 border-1 ">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Funnel size={20} />
+                  <Funnel size={20} className="dark:text-white" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent side="left" className="w-40" align="start">
                   <DropdownMenuLabel>Filter Tasks</DropdownMenuLabel>
@@ -266,28 +266,28 @@ const Dashboard = ({ toDos, setToDos, fetchToDoLists }: DashboardProps) => {
               </DropdownMenu>
             </div>
             <div
-              className="bg-white text-sm h-full flex gap-2 cursor-pointer items-center justify-center rounded-md sm:px-3 border-1"
+              className="bg-white! dark:bg-[#1e3a5f]! dark:text-white text-sm h-full flex gap-2 cursor-pointer items-center justify-center rounded-md sm:px-3 border-1"
               onClick={() => priorityFilter("all")}
             >
               <CircleCheck size={20} color="#2097f3" />
               {!isSmallScreen && "All"}
             </div>
             <div
-              className="bg-white h-full text-sm flex items-center cursor-pointer gap-2 justify-center rounded-md sm:px-3 border-1"
+              className="bg-white! dark:bg-[#1e3a5f]! dark:text-white h-full text-sm flex items-center cursor-pointer gap-2 justify-center rounded-md sm:px-3 border-1"
               onClick={() => priorityFilter("high")}
             >
               <CircleArrowUp size={20} color="red" />
               {!isSmallScreen && "High"}
             </div>
             <div
-              className="bg-white h-full text-sm flex items-center cursor-pointer gap-2 justify-center rounded-md sm:px-3 border-1"
+              className="bg-white! dark:bg-[#1e3a5f]! h-full text-sm dark:text-white flex items-center cursor-pointer gap-2 justify-center rounded-md sm:px-3 border-1"
               onClick={() => priorityFilter("medium")}
             >
               <CircleEqual size={20} color="orange" />
               {!isSmallScreen && "Medium"}
             </div>
             <div
-              className="bg-white h-full text-sm flex items-center cursor-pointer gap-2 justify-center rounded-md md:px-3 border-1"
+              className="bg-white! dark:bg-[#1e3a5f]! h-full text-sm flex dark:text-white items-center cursor-pointer gap-2 justify-center rounded-md md:px-3 border-1"
               onClick={() => priorityFilter("low")}
             >
               <CircleArrowDown size={20} color="green" />

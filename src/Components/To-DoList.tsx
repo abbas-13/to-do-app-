@@ -44,7 +44,7 @@ export const ToDoList = ({ list, deleteList, createList }: ToDoListProps) => {
             placeholder="List name..."
             disabled={list.name?.length > 1}
             value={inputValue}
-            className={`focus:outline-none w-full border-none bg-transparent ${
+            className={`focus:outline-none w-full border-none bg-transparent text-black dark:text-white ${
               list.name?.length > 1 ? "pointer-events-none" : ""
             }`}
           />

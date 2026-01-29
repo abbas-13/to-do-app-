@@ -125,7 +125,7 @@ export const CustomSidebar = () => {
         />
         <div className="flex my-4 items-center justify-center w-full">
           <Button
-            className="bg-[#2097f3] hover:bg-[#FFFFFF] hover:border-2 hover:border-[#2097f3] active:bg-[#2097f3] active:text-white hover:text-black active:outline-2 active:outline-[#85C7F8] hover:shadow-lg active:shadow-none active:border-1 active:border-white text-white"
+            className="bg-foreground hover:bg-[#FFFFFF] hover:border-2 hover:border-[#2097f3] active:bg-[#2097f3] active:text-white hover:text-black active:outline-2 active:outline-[#85C7F8] hover:shadow-lg active:shadow-none active:border-1 active:border-white text-white"
             variant="outline"
             onClick={addList}
           >
@@ -168,7 +168,7 @@ export const CustomSidebar = () => {
           </div>
         </div>
       ) : (
-        <div className="p-2 w-52 bg-[#FAFBFF] border-r-2 border-r-grey-400">
+        <div className="p-2 w-52 bg-secondary border-r-2 border-r-grey-400">
           {sideBarContent()}
         </div>
       )}

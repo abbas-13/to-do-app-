@@ -1,10 +1,10 @@
-import { useTheme } from "next-themes"
-import { Toaster as Sonner } from "sonner"
+import { useTheme } from "next-themes";
+import { Toaster as Sonner } from "sonner";
 
-type ToasterProps = React.ComponentProps<typeof Sonner>
+type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme()
+  const { theme = "system" } = useTheme();
 
   return (
     <Sonner
@@ -12,18 +12,21 @@ const Toaster = ({ ...props }: ToasterProps) => {
       className="toaster group"
       toastOptions={{
         classNames: {
-          toast:
-            "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
-          description: "group-[.toast]:text-muted-foreground",
+          toast: "group bg-[#FAFBFF]! rounded-lg! border-1! shadow-lg",
+          description:
+            "group-data-[type=error]:text-red-600! group-data-[type=success]:text-green-600! group-data-[type=warning]:text-orange-500! group-data-[type=info]:text-blue-600!",
+          title:
+            "group-data-[type=error]:text-red-600! group-data-[type=success]:text-green-600! group-data-[type=warning]:text-orange-500! group-data-[type=info]:text-blue-600! font-medium",
+          icon: "group-data-[type=error]:text-red-500 group-data-[type=success]:text-green-500 group-data-[type=warning]:text-orange-400 group-data-[type=info]:text-blue-500",
           actionButton:
-            "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
-          cancelButton:
-            "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+            "hover:bg-[#2097f3]/90 border-2! group-data-[type=error]:text-red-600! group-data-[type=success]:text-green-500! group-data-[type=warning]:text-orange-400! group-data-[type=info]:text-blue-600! group-data-[type=error]:border-red-500! group-data-[type=success]:border-green-600! group-data-[type=warning]:border-orange-400! group-data-[type=info]:border-blue-600! text-white",
+          cancelButton: "bg-gray-200 hover:bg-gray-300",
+          closeButton: "text-gray-500 hover:text-gray-900",
         },
       }}
       {...props}
     />
-  )
-}
+  );
+};
 
-export { Toaster }
+export { Toaster };

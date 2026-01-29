@@ -12,6 +12,7 @@ import { AuthContext } from "./Context/AuthContext";
 import { ListsContext } from "./Context/ListsContext";
 import { SelectListContext } from "./Context/SelectListContext";
 import type { ListsStateType, ToDoState, UserType } from "./assets/Types";
+import { ThemeProvider } from "./Components/ui/theme-provider";
 
 const App = () => {
   const [toDos, setToDos] = useState<ToDoState[]>([]);
@@ -21,7 +22,7 @@ const App = () => {
     name: "",
   });
   const [user, setUser] = useState<UserType>({
-    userId: "",
+    _id: "",
     name: "",
     email: "",
     displayName: "",
@@ -139,25 +140,26 @@ const App = () => {
         value={{ selectList, selectedList, setSelectedList }}
       >
         <ListsContext.Provider value={{ lists, setLists }}>
-          <Toaster />
-
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Appshell>
-                  <Dashboard
-                    fetchToDoLists={fetchToDoLists}
-                    toDos={toDos}
-                    setToDos={setToDos}
-                  />
-                </Appshell>
-              }
-            />
-          </Routes>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-          </Routes>
+          <ThemeProvider defaultTheme="light">
+            <Toaster />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Appshell>
+                    <Dashboard
+                      fetchToDoLists={fetchToDoLists}
+                      toDos={toDos}
+                      setToDos={setToDos}
+                    />
+                  </Appshell>
+                }
+              />
+            </Routes>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </ThemeProvider>
         </ListsContext.Provider>
       </SelectListContext.Provider>
     </AuthContext.Provider>
