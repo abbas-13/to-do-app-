@@ -1,8 +1,6 @@
 import { Trash, CalendarDays, Clock, EllipsisVertical } from "lucide-react";
-import { Checkbox } from "@/Components//ui/checkbox";
 
-import type { ToDoItemProps } from "../assets/Types";
-import styles from "./To-DoItem.module.css";
+import { Checkbox } from "@/Components//ui/checkbox";
 import {
   Menubar,
   MenubarContent,
@@ -10,6 +8,8 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/Components/ui/menubar";
+import type { ToDoItemProps } from "@/assets/Types";
+import styles from "./To-DoItem.module.css";
 
 export const ToDoItem = ({ data, checkToDo, deleteToDo }: ToDoItemProps) => {
   const priorityColour = () => {

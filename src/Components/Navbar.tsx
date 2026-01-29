@@ -1,3 +1,7 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router";
+import { CircleUserRound, LogIn, LogOut, Moon, Sun } from "lucide-react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,16 +10,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { CircleUserRound, LogIn, LogOut, Moon, Sun } from "lucide-react";
-import { Avatar } from "./ui/avatar";
-import { useContext } from "react";
+} from "@/Components/ui/dropdown-menu";
+import { Avatar } from "@/Components/ui/avatar";
+import { Switch } from "@/Components/ui/switch";
+import { useTheme } from "@/Components/ui/theme-provider";
 import { AuthContext } from "@/Context/AuthContext";
-import { useNavigate } from "react-router";
-import { Switch } from "./ui/switch";
-import { useTheme } from "./ui/theme-provider";
 
-const Navbar = () => {
+export const Navbar = () => {
   const { user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
@@ -123,5 +124,3 @@ const Navbar = () => {
     </div>
   );
 };
-
-export default Navbar;

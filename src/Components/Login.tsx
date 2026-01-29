@@ -1,8 +1,8 @@
-import { Card } from "./ui/card";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Card } from "@/Components/ui/card";
+import { Input } from "@/Components/ui/input";
+import { Button } from "@/Components/ui/button";
 
-const Login = () => {
+export const Login = () => {
   return (
     <div className="h-screen bg-background flex justify-center items-center">
       <Card className="flex items-center flex-col w-[300px] bg-secondary! dark:bg-[#1a202c] py-4 pb-8">
@@ -67,5 +67,3 @@ const Login = () => {
     </div>
   );
 };
-
-export default Login;

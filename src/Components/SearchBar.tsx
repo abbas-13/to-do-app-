@@ -1,5 +1,5 @@
-import type { SearchBarProps } from "../assets/Types";
 import { Input } from "@/Components/ui/input";
+import type { SearchBarProps } from "@/assets/Types";
 
 export const SearchBar = ({
   lists,

@@ -174,7 +174,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-[data-sonner-toast][data-styled="true"] {
-  @apply bg-[#F5FAFE];
-}

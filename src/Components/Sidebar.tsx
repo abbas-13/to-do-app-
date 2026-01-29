@@ -1,16 +1,16 @@
 import { useContext, useState } from "react";
 import { Menu, Plus } from "lucide-react";
-import { Sidebar, SidebarContent, useSidebar } from "./ui/sidebar";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Button } from "@/Components/ui/button";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 import { ToDoList } from "./To-DoList";
 import { SearchBar } from "./SearchBar";
-import { ListsContext } from "../Context/ListsContext";
-import { SelectListContext } from "../Context/SelectListContext";
-import type { ListsStateType } from "../assets/Types";
-import { toast } from "sonner";
-import { useNavigate } from "react-router";
+import { Button } from "@/Components/ui/button";
+import { Sidebar, SidebarContent, useSidebar } from "@/Components/ui/sidebar";
+import { ListsContext } from "@/Context/ListsContext";
+import { SelectListContext } from "@/Context/SelectListContext";
+import { useIsMobile } from "@/hooks/use-mobile";
+import type { ListsStateType } from "@/assets/Types";
 
 export const CustomSidebar = () => {
   const [input, setInput] = useState("");

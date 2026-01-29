@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import { useIsMobile } from "@/hooks/use-mobile";
-import { SidebarProvider } from "./ui/sidebar";
+import { Navbar } from "./Navbar";
 import { CustomSidebar } from "./Sidebar";
-import Navbar from "./Navbar";
+import { SidebarProvider } from "@/Components/ui/sidebar";
+import { useIsMobile } from "@/hooks/use-mobile";
 import styles from "./Appshell.module.css";
 
 interface AppShellProps {

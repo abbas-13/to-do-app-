@@ -4,15 +4,15 @@ import { toast } from "sonner";
 
 import "./App.css";
 
-import Dashboard from "./Components/Dashboard";
-import { Appshell } from "./Components/Appshell";
-import { Toaster } from "./Components/ui/sonner";
-import Login from "./Components/Login";
-import { AuthContext } from "./Context/AuthContext";
-import { ListsContext } from "./Context/ListsContext";
-import { SelectListContext } from "./Context/SelectListContext";
-import type { ListsStateType, ToDoState, UserType } from "./assets/Types";
-import { ThemeProvider } from "./Components/ui/theme-provider";
+import { Dashboard } from "@/Components/Dashboard";
+import { Appshell } from "@/Components/Appshell";
+import { Toaster } from "@/Components/ui/sonner";
+import { Login } from "@/Components/Login";
+import { AuthContext } from "@/Context/AuthContext";
+import { ListsContext } from "@/Context/ListsContext";
+import { SelectListContext } from "@/Context/SelectListContext";
+import { ThemeProvider } from "@/Components/ui/theme-provider";
+import type { ListsStateType, ToDoState, UserType } from "@/assets/Types";
 
 const App = () => {
   const [toDos, setToDos] = useState<ToDoState[]>([]);

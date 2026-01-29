@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
-
-import { SelectListContext } from "../Context/SelectListContext";
-import type { ToDoListProps } from "../assets/Types";
 import { X } from "lucide-react";
-import { useSidebar } from "./ui/sidebar";
+
+import { SelectListContext } from "@/Context/SelectListContext";
+import { useSidebar } from "@/Components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
+import type { ToDoListProps } from "@/assets/Types";
 
 export const ToDoList = ({ list, deleteList, createList }: ToDoListProps) => {
   const { selectList } = useContext(SelectListContext);

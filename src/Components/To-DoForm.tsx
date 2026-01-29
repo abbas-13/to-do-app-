@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/Components/ui/select";
-import type { ToDoFormInput, ToDoFormProps } from "../assets/Types";
+import type { ToDoFormInput, ToDoFormProps } from "@/assets/Types";
 import styles from "./To-DoForm.module.css";
 
 export const ToDoForm = ({

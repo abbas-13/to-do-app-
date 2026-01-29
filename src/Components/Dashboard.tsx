@@ -32,8 +32,8 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Calendar } from "./ui/calendar";
+} from "@/Components/ui/dropdown-menu";
+import { Calendar } from "@/Components/ui/calendar";
 
 interface DashboardProps {
   toDos: ToDoState[];
@@ -41,7 +41,11 @@ interface DashboardProps {
   fetchToDoLists: () => void;
 }
 
-const Dashboard = ({ toDos, setToDos, fetchToDoLists }: DashboardProps) => {
+export const Dashboard = ({
+  toDos,
+  setToDos,
+  fetchToDoLists,
+}: DashboardProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSubmitSuccessful, setIsSubmitSuccessful] = useState<boolean>(false);
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
@@ -314,5 +318,3 @@ const Dashboard = ({ toDos, setToDos, fetchToDoLists }: DashboardProps) => {
     </>
   );
 };
-
-export default Dashboard;
