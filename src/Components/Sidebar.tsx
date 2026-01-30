@@ -1,16 +1,16 @@
 import { useContext, useState } from "react";
 import { Menu, Plus } from "lucide-react";
-import { Sidebar, SidebarContent, useSidebar } from "./ui/sidebar";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Button } from "@/Components/ui/button";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 import { ToDoList } from "./To-DoList";
 import { SearchBar } from "./SearchBar";
-import { ListsContext } from "../Context/ListsContext";
-import { SelectListContext } from "../Context/SelectListContext";
-import type { ListsStateType } from "../assets/Types";
-import { toast } from "sonner";
-import { useNavigate } from "react-router";
+import { Button } from "@/Components/ui/button";
+import { Sidebar, SidebarContent, useSidebar } from "@/Components/ui/sidebar";
+import { ListsContext } from "@/Context/ListsContext";
+import { SelectListContext } from "@/Context/SelectListContext";
+import { useIsMobile } from "@/hooks/use-mobile";
+import type { ListsStateType } from "@/assets/Types";
 
 export const CustomSidebar = () => {
   const [input, setInput] = useState("");
@@ -125,7 +125,7 @@ export const CustomSidebar = () => {
         />
         <div className="flex my-4 items-center justify-center w-full">
           <Button
-            className="bg-[#2097f3] hover:bg-[#FFFFFF] hover:border-2 hover:border-[#2097f3] active:bg-[#2097f3] active:text-white hover:text-black active:outline-2 active:outline-[#85C7F8] hover:shadow-lg active:shadow-none active:border-1 active:border-white text-white"
+            className="bg-foreground hover:bg-[#FFFFFF] hover:border-2 hover:border-[#2097f3] active:bg-[#2097f3] active:text-white hover:text-black active:outline-2 active:outline-[#85C7F8] hover:shadow-lg active:shadow-none active:border-1 active:border-white text-white"
             variant="outline"
             onClick={addList}
           >
@@ -168,7 +168,7 @@ export const CustomSidebar = () => {
           </div>
         </div>
       ) : (
-        <div className="p-2 w-52 bg-[#FAFBFF] border-r-2 border-r-grey-400">
+        <div className="p-2 w-52 bg-secondary border-r-2 border-r-grey-400">
           {sideBarContent()}
         </div>
       )}

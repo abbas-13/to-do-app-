@@ -63,7 +63,7 @@ export interface ToDoListProps {
 }
 
 export interface UserType {
-  userId: string;
+  _id: string;
   name: string;
   email: string;
   displayName: string;

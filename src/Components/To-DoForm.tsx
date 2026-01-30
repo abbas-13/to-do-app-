@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/Components/ui/select";
-import type { ToDoFormInput, ToDoFormProps } from "../assets/Types";
+import type { ToDoFormInput, ToDoFormProps } from "@/assets/Types";
 import styles from "./To-DoForm.module.css";
 
 export const ToDoForm = ({
@@ -56,7 +56,7 @@ export const ToDoForm = ({
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <Button
-          className="bg-[#2097f3] px-3 md:px-4 gap-1 md:gap-2 hover:bg-[#FFFFFF] hover:border-2 hover:border-[#2097f3] active:bg-[#2097f3] active:text-white active:outline-2 active:outline-[#85C7F8] hover:text-black hover:shadow-lg active:shadow-none active:border-1 active:border-white text-white"
+          className="bg-foreground px-3 md:px-4 gap-1 md:gap-2 hover:bg-[#FFFFFF] hover:border-2 hover:border-[#2097f3] active:bg-[#2097f3] active:text-white active:outline-2 active:outline-[#85C7F8] hover:text-black hover:shadow-lg active:shadow-none active:border-1 active:border-white text-white"
           variant="outline"
         >
           Add Task
@@ -70,7 +70,7 @@ export const ToDoForm = ({
         <div className="border border-gray-200"></div>
         <form onSubmit={handleSubmit(onSubmit)} className={styles["todo-form"]}>
           <div className="grid grid-cols-[30%_70%] py-2">
-            <label className="text-xs font-semibold md:text-sm">
+            <label className="text-xs font-semibold md:text-sm dark:text-white">
               To-Do Name:
             </label>
             <div>
@@ -81,7 +81,7 @@ export const ToDoForm = ({
                 type="text"
                 name="toDoName"
                 placeholder="To do name"
-                className="text-xs md:text-sm"
+                className="text-xs md:text-sm dark:text-black dark:bg-gray-200!"
               />
               <ErrorMessage
                 errors={errors}
@@ -95,7 +95,7 @@ export const ToDoForm = ({
             </div>
           </div>
           <div className="grid grid-cols-[30%_70%] py-2">
-            <label className="text-xs font-semibold md:text-sm">
+            <label className="text-xs font-semibold md:text-sm dark:text-white">
               Priority:
             </label>
             <div>
@@ -109,7 +109,7 @@ export const ToDoForm = ({
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger className="text-xs md:text-sm">
+                      <SelectTrigger className="text-xs md:text-sm dark:text-black dark:bg-gray-200!">
                         <SelectValue placeholder="Select a priority" />
                       </SelectTrigger>
                       <SelectContent>
@@ -141,18 +141,22 @@ export const ToDoForm = ({
             </div>
           </div>
           <div className="grid grid-cols-[30%_70%] py-2">
-            <label className="text-xs font-semibold md:text-sm">Notes:</label>
+            <label className="text-xs font-semibold md:text-sm dark:text-white">
+              Notes:
+            </label>
             <div>
               <Textarea
                 placeholder="Notes description"
                 {...register("notes")}
                 name="notes"
-                className="text-xs md:text-sm"
+                className="text-xs md:text-sm dark:bg-gray-200! dark:text-black"
               />
             </div>
           </div>
           <div className="grid grid-cols-[30%_70%] py-2">
-            <label className="text-xs font-semibold md:text-sm">Date:</label>
+            <label className="text-xs font-semibold md:text-sm dark:text-white">
+              Date:
+            </label>
             <div className="flex gap-2">
               <div>
                 <Input
@@ -162,7 +166,7 @@ export const ToDoForm = ({
                   type="date"
                   name="date"
                   id="finish by"
-                  className="text-xs md:text-sm flex-1"
+                  className="text-xs md:text-sm flex-1 dark:bg-gray-200! dark:text-black"
                 />
                 <ErrorMessage
                   errors={errors}
@@ -182,7 +186,7 @@ export const ToDoForm = ({
                   type="time"
                   name="time"
                   id="finish by"
-                  className="text-xs md:text-sm pl-2 pr-1 md:py-1 md:px-3 flex-1"
+                  className="text-xs md:text-sm pl-2 pr-1 md:py-1 md:px-3 flex-1 dark:bg-gray-200! dark:text-black"
                   min={formattedDate}
                 />
                 <ErrorMessage

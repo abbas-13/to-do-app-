@@ -4,7 +4,7 @@ import type { UserContextType } from "@/assets/Types";
 
 export const AuthContext = createContext<UserContextType>({
   user: {
-    userId: "",
+    _id: "",
     name: "",
     email: "",
     displayName: "",

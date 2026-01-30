@@ -4,14 +4,15 @@ import { toast } from "sonner";
 
 import "./App.css";
 
-import Dashboard from "./Components/Dashboard";
-import { Appshell } from "./Components/Appshell";
-import { Toaster } from "./Components/ui/sonner";
-import Login from "./Components/Login";
-import { AuthContext } from "./Context/AuthContext";
-import { ListsContext } from "./Context/ListsContext";
-import { SelectListContext } from "./Context/SelectListContext";
-import type { ListsStateType, ToDoState, UserType } from "./assets/Types";
+import { Dashboard } from "@/Components/Dashboard";
+import { Appshell } from "@/Components/Appshell";
+import { Toaster } from "@/Components/ui/sonner";
+import { Login } from "@/Components/Login";
+import { AuthContext } from "@/Context/AuthContext";
+import { ListsContext } from "@/Context/ListsContext";
+import { SelectListContext } from "@/Context/SelectListContext";
+import { ThemeProvider } from "@/Components/ui/theme-provider";
+import type { ListsStateType, ToDoState, UserType } from "@/assets/Types";
 
 const App = () => {
   const [toDos, setToDos] = useState<ToDoState[]>([]);
@@ -21,7 +22,7 @@ const App = () => {
     name: "",
   });
   const [user, setUser] = useState<UserType>({
-    userId: "",
+    _id: "",
     name: "",
     email: "",
     displayName: "",
@@ -139,25 +140,26 @@ const App = () => {
         value={{ selectList, selectedList, setSelectedList }}
       >
         <ListsContext.Provider value={{ lists, setLists }}>
-          <Toaster />
-
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Appshell>
-                  <Dashboard
-                    fetchToDoLists={fetchToDoLists}
-                    toDos={toDos}
-                    setToDos={setToDos}
-                  />
-                </Appshell>
-              }
-            />
-          </Routes>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-          </Routes>
+          <ThemeProvider defaultTheme="light">
+            <Toaster />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Appshell>
+                    <Dashboard
+                      fetchToDoLists={fetchToDoLists}
+                      toDos={toDos}
+                      setToDos={setToDos}
+                    />
+                  </Appshell>
+                }
+              />
+            </Routes>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </ThemeProvider>
         </ListsContext.Provider>
       </SelectListContext.Provider>
     </AuthContext.Provider>

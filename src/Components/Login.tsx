@@ -1,11 +1,11 @@
-import { Card } from "./ui/card";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Card } from "@/Components/ui/card";
+import { Input } from "@/Components/ui/input";
+import { Button } from "@/Components/ui/button";
 
-const Login = () => {
+export const Login = () => {
   return (
-    <div className="h-screen bg-[#F5FAFE] flex justify-center items-center">
-      <Card className="flex items-center flex-col w-[300px] py-4 pb-8">
+    <div className="h-screen bg-background flex justify-center items-center">
+      <Card className="flex items-center flex-col w-[300px] bg-secondary! dark:bg-[#1a202c] py-4 pb-8">
         <div className="flex gap-2 items-center">
           <img src="/check.png" width={40} />
           <h1 className="bg-gradient-to-r from-[#2097F3] to-[#60B4F5] bg-clip-text text-transparent text-transparent text-[42px] text-balance font-extrabold">
@@ -13,17 +13,17 @@ const Login = () => {
           </h1>
         </div>
         <div className="border mt-2 border-gray-200 w-11/12"></div>
-        <h2 className="scroll-m-20 p-4 text-sm font-[400] text-gray-700 tracking-tight first:mt-0">
+        <h2 className="scroll-m-20 p-4 text-sm font-[400] text-ring tracking-tight first:mt-0">
           Please sign in to continue
         </h2>
         <form className="flex flex-col gap-4 items-center w-4/5 px-4">
           <div className="flex flex-col gap-1 w-full">
             <label>Email</label>
-            <Input />
+            <Input className="dark:bg-gray-200" />
           </div>
           <div className="flex flex-col gap-1 w-full">
             <label>Password</label>
-            <Input />
+            <Input className="dark:bg-gray-200" />
           </div>
           <Button
             className="bg-[#2097f3] w-full h-[40px] text-[16px] cursor-pointer hover:bg-[#FFFFFF] hover:border-2 hover:border-[#2097f3] active:bg-[#2097f3] active:text-white hover:text-black active:outline-2 active:outline-[#85C7F8] hover:shadow-lg active:shadow-none active:border-1 active:border-white text-white"
@@ -33,14 +33,14 @@ const Login = () => {
           </Button>
           <a
             href={`${import.meta.env.VITE_API_URL}/auth/google`}
-            className="text-[16px] max-h-[40px] cursor-pointer hover:bg-[#EEEEEE] flex gap-2 outline-2 outline-gray-400 rounded-sm p-2 px-3"
+            className="text-[16px] rounded-md! w-full max-h-[40px] cursor-pointer hover:bg-[#FFFFFF]! dark:bg-[#EEEEEE] dark:hover:bg-white! dark:text-black border-2 dark:border-[#EEEEEE] dark:hover:border-2 dark:hover:border-[#EEEEEE]! dark:active:bg-[#EEEEEE]! dark:active:outline-2 dark:active:outline-white flex items-center gap-2 rounded-sm p-2 px-3"
           >
             <svg
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 48 48"
               // xmlns:xlink="http://www.w3.org/1999/xlink"
-              style={{ display: "block", width: "28px" }}
+              style={{ display: "block", width: "22px" }}
             >
               <path
                 fill="#EA4335"
@@ -67,5 +67,3 @@ const Login = () => {
     </div>
   );
 };
-
-export default Login;
