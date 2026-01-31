@@ -138,6 +138,9 @@ export const Dashboard = ({
         {
           method: "DELETE",
           credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
       );
 

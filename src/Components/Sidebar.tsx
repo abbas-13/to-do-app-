@@ -29,6 +29,9 @@ export const CustomSidebar = () => {
         {
           method: "POST",
           credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
       );
 
@@ -95,6 +98,9 @@ export const CustomSidebar = () => {
         {
           method: "DELETE",
           credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
       );
 

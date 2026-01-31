@@ -106,9 +106,6 @@ const App = () => {
         {
           method: "GET",
           credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
         },
       );
 
